@@ -2,8 +2,6 @@ package com.quickben22.bitcoinlotto;
 
 
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
@@ -11,11 +9,12 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.EditText;
 import android.widget.TextView;
-import java.util.ArrayList;
-import java.util.Random;
+
 import java.lang.Thread;
 
+
 public class GuessActivity extends AppCompatActivity {
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,14 +23,16 @@ public class GuessActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
+//        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+//        fab.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+//                        .setAction("Action", null).show();
+//            }
+//        });
+
+
     }
 
     @Override
@@ -62,8 +63,9 @@ public class GuessActivity extends AppCompatActivity {
 
         TextView private_tb = findViewById(R.id.private_tb);
         EditText editText = findViewById(R.id.private_tx);
-String message=CryptoClass.GetPrivateKey(editText.getText().toString());
-        private_tb.setText(message);
+        String message=CryptoClass.GetPrivateKey(editText.getText().toString());
+        if(message.length()==64)
+            private_tb.setText(CryptoClass.insertPeriodically(message," ",2));
     }
 
 
@@ -75,42 +77,28 @@ String message=CryptoClass.GetPrivateKey(editText.getText().toString());
         TextView private_tb = findViewById(R.id.private_tb);
 
         String message=CryptoClass.random();
-        private_tb.setText(message);
-
-
+        private_tb.setText(CryptoClass.insertPeriodically(message," ",2));
+        EditText editText = findViewById(R.id.private_tx);
+        editText.setText(message);
 
 
 
     }
 
-   Runnable myRunnable =new Runnable() {
-       @Override
-       public void run() {
-           while (true) {
-               try {
-                   Thread.sleep(1000);
-               } catch (InterruptedException e) {
-                   e.printStackTrace();
-               }
-               final TextView private_tb = findViewById(R.id.private_tb);
-               final String updateWords = updateAuto();
-               private_tb.post(new Runnable() {
-                   @Override
-                   public void run() {
-                       private_tb.setText(updateWords);
-                   }
-               });
-           }
-       }
-   };
 
 
+
+
+    private Thread myThread = null;
+    private CrackingClass runnable = null;
 
     /** Called when the user taps the Send button */
     public void crack_one(View view) {
         // Do something in response to button
         TextView private_tb = findViewById(R.id.private_tb);
-        String PrivText =  (private_tb.getText().toString());
+        String PrivText = CryptoClass.remove_extra(private_tb.getText().toString());
+
+        if(PrivText.length()!=64) return;
         byte[] hex = CryptoClass.hexStringToByteArray(PrivText);
 
 
@@ -119,79 +107,57 @@ String message=CryptoClass.GetPrivateKey(editText.getText().toString());
 
         TextView textView = findViewById(R.id.slova);
         textView.setText(message[0]+"\n"+message[1]);
+
+
+        closeThread();
+
     }
-    public void crack_many(View view) {
-        // Do something in response to button
 
-
-        Thread myThread = new Thread(myRunnable);
-        myThread.start();
-
-        SqliteClass cl=new SqliteClass(this);
-
-
-        TextView private_tb = findViewById(R.id.private_tb);
-        String PrivText = (private_tb.getText().toString());
-        byte[] PrivHex = CryptoClass.hexStringToByteArray(PrivText);
-        PrivHex[31]--;
-        int k = 1;
-        ArrayList<String> list = new ArrayList<>();
-        ArrayList<String> list2 = new ArrayList<>();
-        for (k = 1; k < 500000; k++)
-        {
-
-
-            PrivHex[31]++;
-
-            PrivText=  PrivText.substring(0,62)+ CryptoClass.byteToHex( PrivHex[31]);
-
-            if (PrivHex[31] == 0)
+    public  void closeThread()
+    {
+        if (myThread != null) {
+            runnable.terminate();
+            try
             {
-                for (int l = 30; l >= 0; l--)
-                {
-                    PrivHex[l]++;
-                    PrivText=PrivText.substring(0,l*2)+CryptoClass.byteToHex( PrivHex[l])+PrivText.substring(l*2+2,64);
-
-                    if (PrivHex[l] != 0)
-                        break;
-                }
+                myThread.join();
             }
-
-
-            String[] message = CryptoClass.generateAddresses(PrivHex);
-            list.add(message[0]);
-            list.add(message[1]);
-            list2.add(PrivText);
-            list2.add(PrivText);
-
-            private_tb.setText(PrivText);
-
-            if (k % 50 == 0)
+            catch (Exception e)
             {
 
-                ArrayList<String> izlaz= cl.CheckIsDataAlreadyInDBorNot(list,list2);
 
-                list.clear();
-                list2.clear();
             }
-
         }
 
     }
 
 
 
+    public void crack_many(View view) {
+        // Do something in response to button
 
 
-    public  String updateAuto()
-    {
-        Random rand = new Random();
 
-            String n =   Integer.toString(rand.nextInt(256));
+        SqliteClass cl=new SqliteClass(this);
+        TextView private_tb = findViewById(R.id.private_tb);
+        EditText editText = findViewById(R.id.private_tx);
 
-        return n;
+        String PrivText = CryptoClass.remove_extra(private_tb.getText().toString());
+        closeThread();
+        if(PrivText.length()==64) {
+            runnable = new CrackingClass(private_tb,editText, cl);
+            myThread = new Thread(runnable);
+
+            myThread.start();
+        }
+
 
     }
+
+
+
+
+
+
 
 
 }
