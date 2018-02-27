@@ -1,4 +1,7 @@
 <resources>
     <string name="app_name">BitcoinLotto</string>
     <string name="action_settings">Settings</string>
+	<string name="loading">Loading</string>
+	<string name="pressme">Press me</string>
+	<string name="pressmeultra">Press the ultra button!</string>
 </resources>

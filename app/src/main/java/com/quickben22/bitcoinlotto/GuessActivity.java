@@ -7,21 +7,34 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.text.TextWatcher;
+import android.text.Editable;
+
+
 
 import java.lang.Thread;
-
+import com.mingle.widget.ShapeLoadingDialog;
 
 public class GuessActivity extends AppCompatActivity {
 
 
+    private TextView mTextView;
+    private EditText mEditText;
+    ShapeLoadingDialog shapeLoadingDialog;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_guess);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+         shapeLoadingDialog = new ShapeLoadingDialog(this);
+
+
+
 
 //        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
 //        fab.setOnClickListener(new View.OnClickListener() {
@@ -31,8 +44,9 @@ public class GuessActivity extends AppCompatActivity {
 //                        .setAction("Action", null).show();
 //            }
 //        });
-
-
+        mTextView=findViewById(R.id.LetterCounter);
+        mEditText = findViewById(R.id.private_tx);
+        mEditText.addTextChangedListener(mTextEditorWatcher);
     }
 
     @Override
@@ -62,8 +76,8 @@ public class GuessActivity extends AppCompatActivity {
 
 
         TextView private_tb = findViewById(R.id.private_tb);
-        EditText editText = findViewById(R.id.private_tx);
-        String message=CryptoClass.GetPrivateKey(editText.getText().toString());
+//        EditText editText = findViewById(R.id.private_tx);
+        String message=CryptoClass.GetPrivateKey(mEditText.getText().toString());
         if(message.length()==64)
             private_tb.setText(CryptoClass.insertPeriodically(message," ",2));
     }
@@ -78,10 +92,11 @@ public class GuessActivity extends AppCompatActivity {
 
         String message=CryptoClass.random();
         private_tb.setText(CryptoClass.insertPeriodically(message," ",2));
-        EditText editText = findViewById(R.id.private_tx);
-        editText.setText(message);
+//        EditText editText = findViewById(R.id.private_tx);
+        mEditText.setText(message);
 
-
+        shapeLoadingDialog.setLoadingText("test");
+        shapeLoadingDialog.show();
 
     }
 
@@ -108,8 +123,9 @@ public class GuessActivity extends AppCompatActivity {
         TextView textView = findViewById(R.id.slova);
         textView.setText(message[0]+"\n"+message[1]);
 
-
         closeThread();
+
+        stop_crack();
 
     }
 
@@ -139,12 +155,13 @@ public class GuessActivity extends AppCompatActivity {
 
         SqliteClass cl=new SqliteClass(this);
         TextView private_tb = findViewById(R.id.private_tb);
-        EditText editText = findViewById(R.id.private_tx);
+//        EditText editText = findViewById(R.id.private_tx);
 
         String PrivText = CryptoClass.remove_extra(private_tb.getText().toString());
         closeThread();
         if(PrivText.length()==64) {
-            runnable = new CrackingClass(private_tb,editText, cl);
+            start_crack();
+            runnable = new CrackingClass(private_tb,mEditText, cl);
             myThread = new Thread(runnable);
 
             myThread.start();
@@ -153,6 +170,47 @@ public class GuessActivity extends AppCompatActivity {
 
     }
 
+    private  void start_crack()
+    {
+
+        Button private_button=findViewById(R.id.private_button);
+        Button random_button=findViewById(R.id.random_button);
+        Button crackbutton=findViewById(R.id.button2);
+
+
+        private_button.setEnabled(false);
+        random_button.setEnabled(false);
+        crackbutton.setEnabled(false);
+        Button stopbutton=findViewById(R.id.button);
+        stopbutton.setText("Stop cracking!");
+    }
+
+    private  void stop_crack()
+    {
+        Button private_button=findViewById(R.id.private_button);
+        Button random_button=findViewById(R.id.random_button);
+        Button crackbutton=findViewById(R.id.button2);
+
+        private_button.setEnabled(true);
+        random_button.setEnabled(true);
+        crackbutton.setEnabled(true);
+        Button stopbutton=findViewById(R.id.button);
+        stopbutton.setText("Convert private to public");
+    }
+
+
+    private final TextWatcher mTextEditorWatcher = new TextWatcher() {
+        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+        }
+
+        public void onTextChanged(CharSequence s, int start, int before, int count) {
+            //This sets a textview to the current length
+            mTextView.setText(String.valueOf(s.length()));
+        }
+
+        public void afterTextChanged(Editable s) {
+        }
+    };
 
 
 

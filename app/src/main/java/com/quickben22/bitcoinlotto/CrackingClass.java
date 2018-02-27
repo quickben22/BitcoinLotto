@@ -90,7 +90,7 @@ public class CrackingClass implements Runnable {
                         }
                         else {
                             private_tb.setText(updateWords);
-                            private_tb.setTextColor(Color.parseColor("#A9A9A9"));
+                            private_tb.setTextColor(Color.parseColor("#FFFFFF"));
                         }
 
                     }

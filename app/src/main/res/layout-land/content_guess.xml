@@ -11,29 +11,24 @@
     tools:showIn="@layout/activity_guess">
 
 
-
-
-
-
-
-
     <TextView
         android:id="@+id/slova"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="40dp"
+        android:layout_width="290dp"
+        android:layout_height="41dp"
+        android:layout_marginBottom="16dp"
         android:freezesText="true"
         android:text="Public keys"
         android:textColor="#FFFFFF"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintHorizontal_bias="0.947"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent" />
 
     <Button
         android:id="@+id/button"
         android:layout_width="256dp"
-        android:layout_height="40dp"
-        android:layout_marginBottom="92dp"
+        android:layout_height="42dp"
+        android:layout_marginBottom="16dp"
         android:background="@drawable/buttonshape"
         android:onClick="crack_one"
         android:shadowColor="#A8A8A8"
@@ -44,13 +39,14 @@
         android:textColor="#FFFFFF"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.047"
         app:layout_constraintStart_toStartOf="parent" />
 
     <EditText
         android:id="@+id/private_tx"
         android:layout_width="325dp"
-        android:layout_height="45dp"
-        android:layout_marginBottom="412dp"
+        android:layout_height="43dp"
+        android:layout_marginBottom="212dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:backgroundTint="@android:color/white"
@@ -59,14 +55,14 @@
         android:textColor="#FFFFFF"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.511"
+        app:layout_constraintHorizontal_bias="0.031"
         app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
         android:id="@+id/private_tb"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="172dp"
+        android:layout_width="348dp"
+        android:layout_height="44dp"
+        android:layout_marginBottom="72dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:freezesText="true"
@@ -74,13 +70,14 @@
         android:textColor="#FFFFFF"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.972"
         app:layout_constraintStart_toStartOf="parent" />
 
     <Button
         android:id="@+id/private_button"
-        android:layout_width="256dp"
+        android:layout_width="205dp"
         android:layout_height="40dp"
-        android:layout_marginBottom="336dp"
+        android:layout_marginBottom="212dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:background="@drawable/buttonshape"
@@ -93,13 +90,14 @@
         android:textColor="#FFFFFF"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.929"
         app:layout_constraintStart_toStartOf="parent" />
 
     <Button
         android:id="@+id/random_button"
         android:layout_width="256dp"
         android:layout_height="40dp"
-        android:layout_marginBottom="268dp"
+        android:layout_marginBottom="144dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:background="@drawable/buttonshape"
@@ -112,13 +110,14 @@
         android:textColor="#FFFFFF"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.531"
         app:layout_constraintStart_toStartOf="parent" />
 
     <Button
         android:id="@+id/button2"
-        android:layout_width="256dp"
+        android:layout_width="196dp"
         android:layout_height="40dp"
-        android:layout_marginBottom="216dp"
+        android:layout_marginBottom="76dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:background="@drawable/buttonshape"
@@ -128,31 +127,24 @@
         android:shadowDy="0"
         android:shadowRadius="5"
         android:text="START CRACKING"
-
-
         android:textColor="#FFFFFF"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-
-
-
-        />
-
-
-
+        app:layout_constraintHorizontal_bias="0.025"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
         android:id="@+id/LetterCounter"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="392dp"
+        android:layout_marginBottom="196dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:text="0"
         android:textColor="#FFFFFF"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.07"
         app:layout_constraintStart_toStartOf="parent" />
 
 </android.support.constraint.ConstraintLayout>
