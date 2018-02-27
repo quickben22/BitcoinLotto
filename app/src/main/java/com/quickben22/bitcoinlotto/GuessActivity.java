@@ -83,26 +83,7 @@ String message=CryptoClass.GetPrivateKey(editText.getText().toString());
 
     }
 
-   Runnable myRunnable =new Runnable() {
-       @Override
-       public void run() {
-           while (true) {
-               try {
-                   Thread.sleep(1000);
-               } catch (InterruptedException e) {
-                   e.printStackTrace();
-               }
-               final TextView private_tb = findViewById(R.id.private_tb);
-               final String updateWords = updateAuto();
-               private_tb.post(new Runnable() {
-                   @Override
-                   public void run() {
-                       private_tb.setText(updateWords);
-                   }
-               });
-           }
-       }
-   };
+
 
 
 
@@ -120,6 +101,30 @@ String message=CryptoClass.GetPrivateKey(editText.getText().toString());
         TextView textView = findViewById(R.id.slova);
         textView.setText(message[0]+"\n"+message[1]);
     }
+
+
+    Runnable myRunnable =new Runnable() {
+        @Override
+        public void run() {
+
+            while (true) {
+                try {
+                    Thread.sleep(1000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                final TextView private_tb = findViewById(R.id.private_tb);
+                final String updateWords = updateAuto();
+                private_tb.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        private_tb.setText(updateWords);
+                    }
+                });
+            }
+        }
+    };
+
     public void crack_many(View view) {
         // Do something in response to button
 
