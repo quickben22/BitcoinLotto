@@ -16,6 +16,8 @@ import java.security.NoSuchAlgorithmException;
 public final  class CryptoClass {
 
 
+    public  static  SqliteClass cl;
+public  static  KeysData keysD;
 
     public static byte[] PrivToPub(byte[] PrivHex)
     {
@@ -319,6 +321,8 @@ public final  class CryptoClass {
         }
         return builder.toString();
     }
+
+
 
     public  static  String remove_extra(String s)
     {

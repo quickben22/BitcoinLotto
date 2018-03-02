@@ -1,0 +1,18 @@
+
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+    <data>
+        <variable name="keysD" type="com.quickben22.bitcoinlotto.KeysData"/>
+    </data>
+<RelativeLayout
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.quickben22.bitcoinlotto.fragments.OneFragment">
+
+
+
+
+
+</RelativeLayout>
+</layout>

@@ -1,0 +1,127 @@
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+    <data>
+        <variable name="keysD" type="com.quickben22.bitcoinlotto.KeysData"/>
+    </data>
+
+<RelativeLayout
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.quickben22.bitcoinlotto.fragments.TwoFragment">
+
+
+    <Button
+        android:id="@+id/private_button"
+        android:layout_width="256dp"
+        android:layout_height="40dp"
+
+        android:layout_alignLeft="@+id/private_public_button"
+        android:layout_alignStart="@+id/private_public_button"
+        android:layout_below="@+id/private_tx"
+        android:layout_marginTop="16dp"
+        android:background="@drawable/buttonshape"
+        android:shadowColor="#A8A8A8"
+        android:shadowDx="0"
+        android:shadowDy="0"
+        android:shadowRadius="5"
+        android:text="Input private key"
+        android:textColor="#FFFFFF" />
+
+
+    <EditText
+        android:id="@+id/private_tx"
+        android:layout_width="310dp"
+        android:layout_height="45dp"
+        android:layout_alignEnd="@+id/private_button"
+        android:layout_alignParentTop="true"
+        android:layout_alignRight="@+id/private_button"
+        android:layout_marginTop="92dp"
+        android:backgroundTint="@android:color/white"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:text="@={keysD.inputKey}"
+        android:textColor="#FFFFFF" />
+
+
+    <TextView
+        android:id="@+id/LetterCounter"
+
+        android:text="0"
+        android:textColor="#FFFFFF"
+        android:layout_width="35dp"
+        android:layout_height="25dp"
+
+        android:layout_marginTop="92dp"
+        android:layout_marginLeft="325dp"
+        />
+
+    <Button
+        android:id="@+id/random_button"
+        android:layout_width="256dp"
+        android:layout_height="40dp"
+
+        android:layout_alignLeft="@+id/private_public_button"
+        android:layout_alignStart="@+id/private_public_button"
+        android:layout_below="@+id/private_button"
+        android:layout_marginTop="14dp"
+        android:background="@drawable/buttonshape"
+        android:shadowColor="#A8A8A8"
+        android:shadowDx="0"
+        android:shadowDy="0"
+        android:shadowRadius="5"
+        android:text="Random private key"
+        android:textColor="#FFFFFF" />
+
+    <Button
+        android:id="@+id/private_public_button"
+        android:layout_width="256dp"
+        android:layout_height="40dp"
+
+        android:layout_below="@+id/random_button"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="14dp"
+        android:background="@drawable/buttonshape"
+        android:shadowColor="#A8A8A8"
+        android:shadowDx="0"
+        android:shadowDy="0"
+        android:shadowRadius="5"
+        android:text="Convert private to public"
+        android:textColor="#FFFFFF" />
+
+    <!--<TextView-->
+        <!--android:id="@+id/private_tb"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_marginTop="392dp"-->
+        <!--android:layout_centerHorizontal="true"-->
+        <!--android:freezesText="true"-->
+        <!--android:text="Private Key"-->
+        <!--android:textColor="#AAFFFF"-->
+
+        <!--/>-->
+
+    <TextView
+        android:id="@+id/public_tb"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="320dp"
+
+        android:freezesText="true"
+        android:text="@={keysD.publicKey_compressed}"
+        android:textColor="#B3FFFF" />
+    <TextView
+        android:id="@+id/public_tb2"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="350dp"
+
+        android:freezesText="true"
+        android:text="@={keysD.publicKey_uncompressed}"
+        android:textColor="#B3FFFF" />
+
+</RelativeLayout>
+</layout>
