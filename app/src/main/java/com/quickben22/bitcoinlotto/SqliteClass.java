@@ -2,6 +2,7 @@ package com.quickben22.bitcoinlotto;
 
 
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.SQLException;
@@ -25,14 +26,15 @@ public class SqliteClass {
 
 
     private static String TABLE_NAME = "bitcoin";
+    private static String TABLE_NAME2 = "search";
     private static String ID_NAME = "_id";
 
     private DataBaseHelper mDBHelper;
     private SQLiteDatabase mDb;
 
-    public SqliteClass(Context context) {
+    public SqliteClass(Context context,boolean update) {
 
-        mDBHelper = new DataBaseHelper(context);
+        mDBHelper = new DataBaseHelper(context,update);
 
         try {
             mDBHelper.updateDataBase();
@@ -74,6 +76,73 @@ public class SqliteClass {
         cursor.close();
         return list;
     }
+
+    public  boolean InsertSearchData( int a, String b, int c) {
+
+
+
+//        String Query = "insert into "+TABLE_NAME2+" (combinations, last_a,time) values ("+a+",'" + b + "', " + c + ")";
+
+        ContentValues initialValues = new ContentValues();
+        initialValues.put("id", 1);
+        initialValues.put("combinations", a);
+        initialValues.put("last_a", b);
+        initialValues.put("time", c);
+
+        try {
+
+            int id = (int) mDb.insertWithOnConflict(TABLE_NAME2, null, initialValues, SQLiteDatabase.CONFLICT_IGNORE);
+            if (id == -1) {
+                mDb.update(TABLE_NAME2, initialValues, "id=?", new String[] {"1"});  // number 1 is the _id here, update to variable for your code
+            }
+        }
+        catch (Exception e)
+        {
+            return  false;
+
+        }
+
+        return  true;
+    }
+
+
+    public  ArrayList<String> GetSearchData() {
+
+        ArrayList<String> list= new ArrayList<>();
+
+        String Query = "Select * from " + TABLE_NAME2 + " where id = 1";
+
+
+        try {
+            Cursor cursor = mDb.rawQuery(Query, null);
+            if (cursor.getCount() <= 0) {
+                cursor.close();
+                return list;
+            }
+
+            cursor.moveToFirst();
+            while (!cursor.isAfterLast()) {
+                String combinations = cursor.getString(cursor.getColumnIndex("combinations"));
+                String last_a = cursor.getString(cursor.getColumnIndex("last_a"));
+                String time = cursor.getString(cursor.getColumnIndex("time"));
+
+                list.add(combinations);
+                list.add(last_a);
+                list.add(time);
+                cursor.moveToNext();
+            }
+
+            cursor.close();
+        }
+        catch (Exception e)
+        {
+
+
+        }
+
+        return  list;
+    }
+
 }
 
 

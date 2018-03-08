@@ -61,7 +61,7 @@ public class TwoFragment extends Fragment{
 //                TextView private_tb = (TextView)  getView().findViewById(R.id.private_tb);
 //                EditText mEditText = (EditText)  getView().findViewById(R.id.private_tx);
         String message= CryptoClass.GetPrivateKey(CryptoClass.keysD.getInputKey());
-        if(message.length()==64)
+        if(CryptoClass.keysD.getCharacterCount().equals("64"))
             CryptoClass.keysD.setPrivateKey(CryptoClass.insertPeriodically(message," ",2));
 
 
@@ -94,7 +94,7 @@ public class TwoFragment extends Fragment{
 
                 String PrivText = CryptoClass.remove_extra(CryptoClass.keysD.getPrivateKey());
 
-                if(PrivText.length()!=64) return;
+                if(!CryptoClass.keysD.getCharacterCount().equals("64")) return;
                 byte[] hex = CryptoClass.hexStringToByteArray(PrivText);
 
 

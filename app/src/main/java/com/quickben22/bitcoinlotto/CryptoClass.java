@@ -37,6 +37,8 @@ public  static  KeysData keysD;
 
     }
 
+    public  static  int k=1;
+
     public static byte[] PrivToPub_compressed(byte[] PrivHex)
     {
         byte[] hex = ValidateAndGetHexPrivateKey((byte)0x00, PrivHex);

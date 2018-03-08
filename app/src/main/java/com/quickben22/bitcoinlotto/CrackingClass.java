@@ -14,28 +14,36 @@ public class CrackingClass implements Runnable {
     private volatile boolean running = true;
     private TextView private_tb;
     private SqliteClass cl;
-    private  EditText editText;
-   public CrackingClass(TextView t, EditText e, SqliteClass sq)
+//    private  EditText editText;
+   public CrackingClass(TextView t, SqliteClass sq)
    {
        private_tb=t;
-       editText=e;
+//       editText=e;
         cl=sq;
    }
     public void terminate() {
         running = false;
     }
 
+
+
+
+
     @Override
     public void run() {
 
-        String PrivText = CryptoClass.remove_extra(private_tb.getText().toString());
+        String PrivText = CryptoClass.remove_extra(CryptoClass.keysD.getPrivateKey());
         byte[] PrivHex = CryptoClass.hexStringToByteArray(PrivText);
         PrivHex[31]--;
-        int k = 1;
+        int k = Integer.parseInt( CryptoClass.keysD.getKeysCount())+1;
         ArrayList<String> list = new ArrayList<>();
         ArrayList<String> list2 = new ArrayList<>();
+        int k2=1;
         while (running) {
             try {
+                CryptoClass.keysD.setKeysCount(Integer.toString(k));
+                CryptoClass.k=k2;
+                k2++;
                 k++;
                 PrivHex[31]++;
                 PrivText=  PrivText.substring(0,62)+ CryptoClass.byteToHex( PrivHex[31]);
@@ -65,6 +73,7 @@ public class CrackingClass implements Runnable {
                boolean flag=false;
                 if (k % 20 == 0)
                 {
+                    CryptoClass.cl.InsertSearchData(Integer.parseInt(CryptoClass.keysD.getKeysCount()), CryptoClass.remove_extra(CryptoClass.keysD.getPrivateKey()),0);
 
                     ArrayList<String> izlaz= cl.CheckIsDataAlreadyInDBorNot(list,list2);
                     if(izlaz.size()>0)
@@ -80,17 +89,23 @@ public class CrackingClass implements Runnable {
 
                 final String updateWords = ispis;
                 final  boolean updateColor=flag;
-                private_tb.post(new Runnable() {
+                private_tb.post(
+                        new Runnable() {
                     @Override
                     public void run() {
+                        CryptoClass.keysD.setPrivateKey(updateWords);
+                        //                            private_tb.setText(updateWords);
                         if(updateColor) {
-                            private_tb.setText(updateWords);
-                            editText.setText(updateWords);
+
+                            CryptoClass.keysD.setInputKey(updateWords);
+
+//                            editText.setText(updateWords);
+
                             private_tb.setTextColor(Color.parseColor("#FF0000"));
                         }
                         else {
-                            private_tb.setText(updateWords);
-                            private_tb.setTextColor(Color.parseColor("#FFFFFF"));
+
+                            private_tb.setTextColor(Color.parseColor("#B3FFFF"));
                         }
 
                     }
