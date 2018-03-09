@@ -1,5 +1,6 @@
 package com.quickben22.bitcoinlotto.fragments;
-
+import java.lang.Object;
+import android.content.Context;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -10,14 +11,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
+import android.content.ClipboardManager;
 import android.widget.TextView;
-
+import android.content.ClipData;
 import com.quickben22.bitcoinlotto.CryptoClass;
 import com.quickben22.bitcoinlotto.R;
 import com.quickben22.bitcoinlotto.databinding.FragmentTwoBinding;
 
-import org.w3c.dom.Text;
+
 
 
 public class TwoFragment extends Fragment{
@@ -43,6 +44,7 @@ public class TwoFragment extends Fragment{
                 inflater, R.layout.fragment_two, container, false);
         binding.setKeysD(CryptoClass.keysD);
         View view = binding.getRoot();
+
 
 //         View view = inflater.inflate(R.layout.fragment_two,
 //                container, false);
@@ -103,13 +105,53 @@ public class TwoFragment extends Fragment{
                 CryptoClass.keysD.setPublicKey_compressed(message[0]);
                 CryptoClass.keysD.setPublicKey_uncompressed(message[1]);
 
-
+                TextView copy_button1 =  getView().findViewById(R.id.copy_button1);
+                TextView copy_button2 =  getView().findViewById(R.id.copy_button2);
+                copy_button1.setVisibility(View.VISIBLE);
+                copy_button2.setVisibility(View.VISIBLE);
 //                TextView textView = getView().findViewById(R.id.public_tb);
 //                textView.setText(message[0]+"\n"+message[1]);
 
 
             }
         });
+
+
+        Button copy_button1 = (Button) view.findViewById(R.id.copy_button1);
+
+        copy_button1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+
+
+
+                ClipboardManager clipboard = (ClipboardManager)getActivity().getSystemService(Context.CLIPBOARD_SERVICE);
+                ClipData clip = ClipData.newPlainText("Public key compressed",CryptoClass.keysD.getPublicKey_compressed());
+                clipboard.setPrimaryClip(clip);
+
+
+            }
+        });
+
+
+        Button copy_button2 = (Button) view.findViewById(R.id.copy_button2);
+
+        copy_button2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+
+                ClipboardManager clipboard = (ClipboardManager)getActivity().getSystemService(Context.CLIPBOARD_SERVICE);
+                ClipData clip = ClipData.newPlainText("Public key uncompressed",CryptoClass.keysD.getPublicKey_uncompressed());
+                clipboard.setPrimaryClip(clip);
+
+
+            }
+        });
+
+
+
 
          EditText meditext = (EditText) view.findViewById(R.id.private_tx);
         meditext.addTextChangedListener(mTextEditorWatcher);

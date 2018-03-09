@@ -2,13 +2,13 @@ package com.quickben22.bitcoinlotto;
 
 
 import android.databinding.DataBindingUtil;
-import android.graphics.Color;
 import android.os.Bundle;
+
 import android.support.v7.app.AppCompatActivity;
 
 
 import com.github.ndczz.infinityloading.InfinityLoading;
-import com.quickben22.bitcoinlotto.databinding.ActivityGuessBinding;
+
 
 import android.support.v7.widget.Toolbar;
 import android.view.View;
@@ -16,16 +16,12 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.TextView;
-import android.text.TextWatcher;
-import android.text.Editable;
-import android.widget.EditText;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
-//import android.support.v7.app.AppCompatActivity;
-//import android.support.v7.widget.Toolbar;
+
 import java.math.RoundingMode;
 
 import com.quickben22.bitcoinlotto.databinding.ContentGuessBinding;
@@ -36,11 +32,9 @@ import java.lang.Thread;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Timer;
 
-//import com.mingle.widget.ShapeLoadingDialog;
-//import com.victor.loading.rotate.RotateLoading;
-//import com.zl.reik.dilatingdotsprogressbar.DilatingDotsProgressBar;
+
+
 import android.os.Handler;
 
 public class GuessActivity extends AppCompatActivity {
@@ -72,6 +66,7 @@ public class GuessActivity extends AppCompatActivity {
 //         shapeLoadingDialog = new ShapeLoadingDialog(this);
 
 
+
 //        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         viewPager = (ViewPager) findViewById(R.id.viewpager);
@@ -84,10 +79,10 @@ public class GuessActivity extends AppCompatActivity {
         mTextView=findViewById(R.id.LetterCounter);
 
 
-
        CryptoClass.cl=new SqliteClass(this,false);
 
-
+        TextView private_tb = findViewById(R.id.private_tb);
+        runnable = new CrackingClass(private_tb, CryptoClass.cl,this);
 
         ArrayList<String> lista= CryptoClass.cl.GetSearchData();
 
@@ -256,15 +251,16 @@ return  povrat;
 
 
 
-        TextView private_tb = findViewById(R.id.private_tb);
+
 //        EditText mEditText = findViewById(R.id.private_tx);
 
 
         String PrivText = CryptoClass.remove_extra(CryptoClass.keysD.getPrivateKey());
         if( closeThread()) {
             if (CryptoClass.keysD.getCharacterCount().equals("64")) {
+                runnable.set_running();
                 start_crack();
-                runnable = new CrackingClass(private_tb, CryptoClass.cl);
+
                 myThread = new Thread(runnable);
 
                 myThread.start();
@@ -301,10 +297,10 @@ startTimer();
         random_button.setEnabled(false);
         crackbutton.setEnabled(false);
         Button stopbutton=findViewById(R.id.crack_button);
-        stopbutton.setText("Stop cracking!");
+        stopbutton.setText("Stop searching!");
     }
 
-    private  void stop_crack()
+    public   void stop_crack()
     {
         stopTimer();
         InfinityLoading infinity = findViewById(R.id.loading);
@@ -317,7 +313,7 @@ startTimer();
         random_button.setEnabled(true);
         crackbutton.setEnabled(true);
         Button stopbutton=findViewById(R.id.crack_button);
-        stopbutton.setText("Start Cracking!");
+        stopbutton.setText("Start searching!");
         CryptoClass.keysD.setInputKey(CryptoClass.remove_extra(CryptoClass.keysD.getPrivateKey()));
 
         CryptoClass.cl.InsertSearchData(Integer.parseInt(CryptoClass.keysD.getKeysCount()), CryptoClass.remove_extra(CryptoClass.keysD.getPrivateKey()),seconds);
@@ -346,7 +342,8 @@ startTimer();
                 int minutes = (seconds % 3600) / 60;
                 int sec = seconds % 60;
                 String time = String.format("%02d:%02d:%02d", hours, minutes, sec);
-
+                if(!runnable.get_running())
+                    stop_crack();
                 if(running) {
                     CryptoClass.keysD.setTimer(time);
 

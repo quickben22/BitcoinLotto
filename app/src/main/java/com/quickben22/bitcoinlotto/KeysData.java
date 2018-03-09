@@ -2,7 +2,6 @@ package com.quickben22.bitcoinlotto;
 
 import android.databinding.BaseObservable;
 import android.databinding.Bindable;
-import android.view.ViewDebug;
 
 import java.util.Observable;
 /**
