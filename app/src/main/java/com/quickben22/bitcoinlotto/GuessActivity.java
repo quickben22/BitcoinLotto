@@ -11,6 +11,7 @@ import com.github.ndczz.infinityloading.InfinityLoading;
 
 
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -60,6 +61,10 @@ public class GuessActivity extends AppCompatActivity {
         bindings.setKeysD(CryptoClass.keysD);
 
 //        setContentView(R.layout.activity_guess);
+
+
+
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
        setSupportActionBar(toolbar);
 
@@ -105,6 +110,14 @@ public class GuessActivity extends AppCompatActivity {
 
 //        mEditText = findViewById(R.id.private_tx);
 //        mEditText.addTextChangedListener(mTextEditorWatcher);
+    }
+
+
+    private  void neznam()
+    {
+
+
+
     }
 
     private void setupViewPager(ViewPager viewPager) {
