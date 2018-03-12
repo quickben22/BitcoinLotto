@@ -1,0 +1,154 @@
+<layout xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <data>
+        <variable name="keysD" type="com.quickben22.bitcoinlotto.KeysData"/>
+    </data>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context="com.quickben22.bitcoinlotto.fragments.TwoFragment">
+
+
+        <Button
+            android:id="@+id/private_button"
+            android:layout_width="256dp"
+            android:layout_height="40dp"
+
+            android:layout_alignLeft="@+id/random_button"
+            android:layout_alignStart="@+id/random_button"
+            android:layout_below="@+id/private_tx"
+            android:layout_marginTop="42dp"
+            android:background="@drawable/buttonshape"
+            android:shadowColor="#A8A8A8"
+            android:shadowDx="0"
+            android:shadowDy="0"
+            android:shadowRadius="5"
+            android:text="Input private key"
+            android:textColor="#FFFFFF" />
+
+
+        <EditText
+            android:id="@+id/private_tx"
+            android:layout_width="310dp"
+            android:layout_height="45dp"
+            android:layout_alignBaseline="@+id/LetterCounter"
+            android:layout_alignBottom="@+id/LetterCounter"
+            android:backgroundTint="@android:color/white"
+            android:ems="10"
+            android:inputType="textPersonName"
+            android:text="@={keysD.inputKey}"
+            android:textColor="#FFFFFF" />
+
+
+        <TextView
+            android:id="@+id/LetterCounter"
+            android:layout_width="35dp"
+            android:layout_height="25dp"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="390dp"
+            android:layout_marginLeft="10dp"
+            android:layout_toEndOf="@+id/private_button"
+            android:layout_toRightOf="@+id/private_button"
+            android:text="@={keysD.characterCount}"
+            android:textColor="#FFFFFF" />
+
+        <Button
+            android:id="@+id/random_button"
+            android:layout_width="256dp"
+            android:layout_height="40dp"
+
+            android:layout_alignLeft="@+id/private_public_button"
+            android:layout_alignStart="@+id/private_public_button"
+            android:layout_below="@+id/private_button"
+            android:layout_marginTop="18dp"
+            android:background="@drawable/buttonshape"
+            android:shadowColor="#A8A8A8"
+            android:shadowDx="0"
+            android:shadowDy="0"
+            android:shadowRadius="5"
+            android:text="Random private key"
+            android:textColor="#FFFFFF" />
+
+        <Button
+            android:id="@+id/private_public_button"
+            android:layout_width="256dp"
+            android:layout_height="40dp"
+
+            android:layout_below="@+id/random_button"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/buttonshape"
+            android:shadowColor="#A8A8A8"
+            android:shadowDx="0"
+            android:shadowDy="0"
+            android:shadowRadius="5"
+            android:text="Convert private to public"
+            android:textColor="#FFFFFF" />
+
+        <!--<TextView-->
+        <!--android:id="@+id/private_tb"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_marginTop="392dp"-->
+        <!--android:layout_centerHorizontal="true"-->
+        <!--android:freezesText="true"-->
+        <!--android:text="Private Key"-->
+        <!--android:textColor="#AAFFFF"-->
+
+        <!--/>-->
+
+        <TextView
+            android:id="@+id/public_tb"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            android:layout_below="@+id/private_public_button"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="16dp"
+            android:freezesText="true"
+            android:text="@={keysD.publicKey_compressed}"
+            android:textColor="#B3FFFF" />
+
+        <TextView
+            android:id="@+id/public_tb2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            android:layout_alignLeft="@+id/public_tb"
+            android:layout_below="@+id/public_tb"
+            android:layout_marginTop="20dp"
+            android:freezesText="true"
+            android:text="@={keysD.publicKey_uncompressed}"
+            android:textColor="#B3FFFF" />
+
+        <Button
+            android:id="@+id/copy_button1"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_alignBottom="@+id/public_tb"
+            android:layout_alignRight="@+id/public_tb"
+            android:layout_marginRight="-32dp"
+            android:background="@drawable/buttonshape2"
+            android:foreground="?android:attr/actionModeCopyDrawable"
+            android:foregroundTint="@android:color/background_light"
+            android:text="c"
+            android:textColor="@android:color/background_light"
+            android:visibility="gone" />
+
+        <Button
+            android:id="@+id/copy_button2"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_alignBottom="@+id/public_tb2"
+            android:layout_alignRight="@+id/public_tb2"
+            android:layout_marginRight="-32dp"
+            android:background="@drawable/buttonshape2"
+            android:foreground="?android:attr/actionModeCopyDrawable"
+            android:foregroundTint="@android:color/background_light"
+            android:text="c"
+            android:textColor="@android:color/background_light"
+            android:visibility="gone" />
+
+    </RelativeLayout>
+</layout>

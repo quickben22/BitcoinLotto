@@ -1,6 +1,7 @@
 apply plugin: 'com.android.application'
 
 android {
+    dataBinding.enabled = true
     compileSdkVersion 26
     defaultConfig {
         applicationId "com.quickben22.bitcoinlotto"
@@ -21,7 +22,11 @@ android {
 dependencies {
     compile 'com.madgag.spongycastle:bcpkix-jdk15on:1.58.0.0'
     compile 'com.madgag.spongycastle:bcpg-jdk15on:1.58.0.0'
-    compile 'com.github.zzz40500:android-shapeLoadingView:1.0.3.2'
+    compile 'com.android.billingclient:billing:1.0'
+//    compile 'com.github.zzz40500:android-shapeLoadingView:1.0.3.2'
+//    compile 'com.victor:lib:1.0.4'
+    compile 'com.github.ndczz:infinity-loading:0.4'
+//    compile 'com.github.justzak:dilatingdotsprogressbar:1.0.1'
 
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation 'com.android.support:appcompat-v7:26.1.0'
@@ -31,3 +36,5 @@ dependencies {
     androidTestImplementation 'com.android.support.test:runner:1.0.1'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
 }
+
+
