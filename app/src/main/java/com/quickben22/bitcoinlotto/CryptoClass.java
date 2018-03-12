@@ -295,4 +295,36 @@ public final  class CryptoClass {
         return  s;
     }
 
+    public static String insertPeriodically(
+            String text, String insert, int period)
+    {
+        StringBuilder builder = new StringBuilder(
+                text.length() + insert.length() * (text.length()/period)+1);
+
+        int index = 0;
+        String prefix = "";
+
+        while (index < text.length())
+        {
+            // Don't put the insert in the very first iteration.
+            // This is easier than appending it *after* each substring
+            builder.append(prefix);
+            if(index==text.length()/2-period)
+                prefix = "\n";
+            else
+                prefix = insert;
+            builder.append(text.substring(index,
+                    Math.min(index + period, text.length())));
+            index += period;
+        }
+        return builder.toString();
+    }
+
+    public  static  String remove_extra(String s)
+    {
+
+        return  s.replace("BINGO -","").replace(" ","").replace("\n","");
+    }
+
+
 }

@@ -4,42 +4,59 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:screenOrientation="portrait"
+    android:background="@drawable/background"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context="com.quickben22.bitcoinlotto.GuessActivity"
     tools:showIn="@layout/activity_guess">
+
+
+
+
+
+
+
 
     <TextView
         android:id="@+id/slova"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="28dp"
-        android:text="Hello World!"
+        android:layout_marginBottom="40dp"
+        android:freezesText="true"
+        android:text="Public keys"
+        android:textColor="#FFFFFF"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintHorizontal_bias="0.47"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent" />
 
     <Button
         android:id="@+id/button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="60dp"
+        android:layout_width="256dp"
+        android:layout_height="40dp"
+        android:layout_marginBottom="92dp"
+        android:background="@drawable/buttonshape"
         android:onClick="crack_one"
-        android:text="Crack"
+        android:shadowColor="#A8A8A8"
+        android:shadowDx="0"
+        android:shadowDy="0"
+        android:shadowRadius="5"
+        android:text="Convert private to public"
+        android:textColor="#FFFFFF"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.283"
         app:layout_constraintStart_toStartOf="parent" />
 
     <EditText
         android:id="@+id/private_tx"
         android:layout_width="325dp"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="188dp"
+        android:layout_height="45dp"
+        android:layout_marginBottom="412dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
+        android:backgroundTint="@android:color/white"
         android:ems="10"
         android:inputType="textPersonName"
+        android:textColor="#FFFFFF"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.511"
@@ -49,54 +66,93 @@
         android:id="@+id/private_tb"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="160dp"
+        android:layout_marginBottom="172dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
-        android:text="TextView"
+        android:freezesText="true"
+        android:text="Private Key"
+        android:textColor="#FFFFFF"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
     <Button
         android:id="@+id/private_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="252dp"
+        android:layout_width="256dp"
+        android:layout_height="40dp"
+        android:layout_marginBottom="336dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
+        android:background="@drawable/buttonshape"
         android:onClick="private_button_click"
+        android:shadowColor="#A8A8A8"
+        android:shadowDx="0"
+        android:shadowDy="0"
+        android:shadowRadius="5"
         android:text="Input private key"
+        android:textColor="#FFFFFF"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.103"
         app:layout_constraintStart_toStartOf="parent" />
 
     <Button
         android:id="@+id/random_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="252dp"
+        android:layout_width="256dp"
+        android:layout_height="40dp"
+        android:layout_marginBottom="268dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
+        android:background="@drawable/buttonshape"
         android:onClick="random_button_click"
+        android:shadowColor="#A8A8A8"
+        android:shadowDx="0"
+        android:shadowDy="0"
+        android:shadowRadius="5"
         android:text="Random private key"
+        android:textColor="#FFFFFF"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.892"
         app:layout_constraintStart_toStartOf="parent" />
 
     <Button
         android:id="@+id/button2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="60dp"
+        android:layout_width="256dp"
+        android:layout_height="40dp"
+        android:layout_marginBottom="216dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
+        android:background="@drawable/buttonshape"
         android:onClick="crack_many"
+        android:shadowColor="#A8A8A8"
+        android:shadowDx="0"
+        android:shadowDy="0"
+        android:shadowRadius="5"
         android:text="START CRACKING"
+
+
+        android:textColor="#FFFFFF"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.76"
+        app:layout_constraintStart_toStartOf="parent"
+
+
+
+        />
+
+
+
+
+    <TextView
+        android:id="@+id/LetterCounter"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="392dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:text="0"
+        android:textColor="#FFFFFF"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
 </android.support.constraint.ConstraintLayout>
