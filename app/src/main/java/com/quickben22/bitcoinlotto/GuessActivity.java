@@ -28,13 +28,15 @@ import java.math.RoundingMode;
 import com.quickben22.bitcoinlotto.databinding.ContentGuessBinding;
 import com.quickben22.bitcoinlotto.fragments.OneFragment;
 import com.quickben22.bitcoinlotto.fragments.TwoFragment;
+import com.quickben22.bitcoinlotto.fragments.ThreeFragment;
 
 import java.lang.Thread;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
-
-
+import com.google.android.gms.ads.MobileAds;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
 
 import android.os.Handler;
 
@@ -48,7 +50,7 @@ public class GuessActivity extends AppCompatActivity {
     int seconds;
     boolean running;
 
-
+    private AdView mAdView;
     private TextView mTextView;
 //    private EditText mEditText;
 //    ShapeLoadingDialog shapeLoadingDialog;
@@ -57,11 +59,15 @@ public class GuessActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         ContentGuessBinding bindings = DataBindingUtil.setContentView(this, R.layout.content_guess);
-        CryptoClass.keysD = new KeysData("","","","","0","0","00:00:00","0");
+        CryptoClass.keysD = new KeysData("","","","",
+                "0","0","00:00:00","0","5 Black Dragons","","Bones, Vision, Antioxidant, Metabolism, Repair","","0");
         bindings.setKeysD(CryptoClass.keysD);
-
+        // Sample AdMob app ID: ca-app-pub-3940256099942544~3347511713
+        MobileAds.initialize(this, "ca-app-pub-3940256099942544~3347511713");
 //        setContentView(R.layout.activity_guess);
-
+        mAdView = findViewById(R.id.adView);
+        AdRequest adRequest = new AdRequest.Builder().build();
+        mAdView.loadAd(adRequest);
 
 
 
@@ -124,7 +130,7 @@ public class GuessActivity extends AppCompatActivity {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
         adapter.addFragment(new OneFragment(), "MAIN");
         adapter.addFragment(new TwoFragment(), "ADVANCED");
-
+        adapter.addFragment(new ThreeFragment(), "PUZZLE");
 
         viewPager.setAdapter(adapter);
 
