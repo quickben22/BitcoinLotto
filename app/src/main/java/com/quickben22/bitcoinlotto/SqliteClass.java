@@ -31,9 +31,9 @@ public class SqliteClass {
     private DataBaseHelper mDBHelper;
     private SQLiteDatabase mDb;
 
-    public SqliteClass(Context context,boolean update) {
+    public SqliteClass(Context context) {
 
-        mDBHelper = new DataBaseHelper(context,update);
+        mDBHelper = new DataBaseHelper(context);
 
         try {
             mDBHelper.updateDataBase();
@@ -47,6 +47,25 @@ public class SqliteClass {
             throw mSQLException;
         }
     }
+
+    public  void update(boolean b)
+    {
+        mDBHelper.setmNeedUpdate(b);
+        try {
+            mDBHelper.updateDataBase();
+        } catch (IOException mIOException) {
+            throw new Error("UnableToUpdateDatabase");
+        }
+
+
+        try {
+            mDb = mDBHelper.getWritableDatabase();
+        } catch (SQLException mSQLException) {
+            throw mSQLException;
+        }
+
+    }
+
     public  ArrayList<String> CheckIsDataAlreadyInDBorNot( ArrayList<String> fieldValues,ArrayList<String> addresses) {
 
         ArrayList<String> list= new ArrayList<>();
@@ -76,7 +95,7 @@ public class SqliteClass {
         return list;
     }
 
-    public  boolean InsertSearchData( int a, String b, int c) {
+    public  boolean InsertSearchData( int a, String b, int c,String d,String e2,String f,String g, String h) {
 
 
 
@@ -87,7 +106,11 @@ public class SqliteClass {
         initialValues.put("combinations", a);
         initialValues.put("last_a", b);
         initialValues.put("time", c);
-
+        initialValues.put("solution1", d);
+        initialValues.put("solution2", e2);
+        initialValues.put("solution3", f);
+        initialValues.put("solution4", g);
+        initialValues.put("solution5", h);
         try {
 
             int id = (int) mDb.insertWithOnConflict(TABLE_NAME2, null, initialValues, SQLiteDatabase.CONFLICT_IGNORE);
@@ -125,7 +148,7 @@ public class SqliteClass {
             return  false;
 
         }
-
+        CryptoClass.keysD.setEndAddress(b);
         return  true;
     }
 
@@ -151,11 +174,15 @@ public class SqliteClass {
                 String start = cursor.getString(cursor.getColumnIndex("start"));
                 String end = cursor.getString(cursor.getColumnIndex("end"));
 
-                if((a.compareTo(start)==1 || a.compareTo(start)==0) && (a.compareTo(end)==-1 || a.compareTo(end)==0)) {
-                    povrat[0]=start;
-                    povrat[1]=end;
-                    cursor.close();
-                    return povrat;
+                if(a.toLowerCase().compareTo(start.toLowerCase())>=0  && a.toLowerCase().compareTo(end.toLowerCase())<=0 )
+                {
+                    if(povrat[1].toLowerCase().compareTo(end.toLowerCase())<0)
+                    {
+                        povrat[0] = start;
+                        povrat[1] = end;
+                    }
+
+
                 }
                 cursor.moveToNext();
             }
@@ -165,11 +192,11 @@ public class SqliteClass {
         catch (Exception e)
         {
 
-
         }
-
         return  povrat;
     }
+
+
 
 
     public  ArrayList<String> GetSearchData() {
@@ -191,10 +218,17 @@ public class SqliteClass {
                 String combinations = cursor.getString(cursor.getColumnIndex("combinations"));
                 String last_a = cursor.getString(cursor.getColumnIndex("last_a"));
                 String time = cursor.getString(cursor.getColumnIndex("time"));
-
+                String s1 = cursor.getString(cursor.getColumnIndex("solution1"));
+                String s2 = cursor.getString(cursor.getColumnIndex("solution2"));
+                String s3 = cursor.getString(cursor.getColumnIndex("solution3"));
+                String s4 = cursor.getString(cursor.getColumnIndex("solution4"));
                 list.add(combinations);
                 list.add(last_a);
                 list.add(time);
+                list.add(s1);
+                list.add(s2);
+                list.add(s3);
+                list.add(s4);
                 cursor.moveToNext();
             }
 

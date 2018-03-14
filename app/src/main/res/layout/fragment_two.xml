@@ -36,7 +36,6 @@
             android:layout_alignBottom="@+id/LetterCounter"
             android:backgroundTint="@android:color/white"
             android:ems="10"
-            android:inputType="textPersonName"
             android:text="@={keysD.inputKey}"
             android:textColor="#FFFFFF" />
 
