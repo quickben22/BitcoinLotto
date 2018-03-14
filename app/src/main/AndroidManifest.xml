@@ -13,7 +13,9 @@
             android:screenOrientation="portrait"
             android:name=".GuessActivity"
             android:label="Bitcoin Key Hunter"
+            android:windowSoftInputMode="adjustPan"
             android:theme="@style/AppTheme.NoActionBar">
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -21,5 +23,4 @@
             </intent-filter>
         </activity>
     </application>
-    <uses-permission android:name="com.android.vending.BILLING" />
 </manifest>

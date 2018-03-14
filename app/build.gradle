@@ -7,8 +7,8 @@ android {
         applicationId "com.quickben22.bitcoinlotto"
         minSdkVersion 15
         targetSdkVersion 26
-        versionCode 1
-        versionName "1.0"
+        versionCode 3
+        versionName "alfa 1.1"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
@@ -17,17 +17,19 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+    dexOptions {
+        jumboMode = true
+    }
 }
 
 dependencies {
     compile 'com.madgag.spongycastle:bcpkix-jdk15on:1.58.0.0'
     compile 'com.madgag.spongycastle:bcpg-jdk15on:1.58.0.0'
-    compile 'com.android.billingclient:billing:1.0'
 //    compile 'com.github.zzz40500:android-shapeLoadingView:1.0.3.2'
 //    compile 'com.victor:lib:1.0.4'
     compile 'com.github.ndczz:infinity-loading:0.4'
 //    compile 'com.github.justzak:dilatingdotsprogressbar:1.0.1'
-
+    compile 'com.google.android.gms:play-services-ads:11.8.0'
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation 'com.android.support:appcompat-v7:26.1.0'
     implementation 'com.android.support.constraint:constraint-layout:1.0.2'

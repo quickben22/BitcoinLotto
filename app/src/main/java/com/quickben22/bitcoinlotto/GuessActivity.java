@@ -28,13 +28,15 @@ import java.math.RoundingMode;
 import com.quickben22.bitcoinlotto.databinding.ContentGuessBinding;
 import com.quickben22.bitcoinlotto.fragments.OneFragment;
 import com.quickben22.bitcoinlotto.fragments.TwoFragment;
+import com.quickben22.bitcoinlotto.fragments.ThreeFragment;
 
 import java.lang.Thread;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
-
-
+import com.google.android.gms.ads.MobileAds;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
 
 import android.os.Handler;
 
@@ -48,7 +50,7 @@ public class GuessActivity extends AppCompatActivity {
     int seconds;
     boolean running;
 
-
+    private AdView mAdView;
     private TextView mTextView;
 //    private EditText mEditText;
 //    ShapeLoadingDialog shapeLoadingDialog;
@@ -57,11 +59,15 @@ public class GuessActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         ContentGuessBinding bindings = DataBindingUtil.setContentView(this, R.layout.content_guess);
-        CryptoClass.keysD = new KeysData("","","","","0","0","00:00:00","0");
+        CryptoClass.keysD = new KeysData("","","","",
+                "0","0","00:00:00","0","","","1. 5 Black Dragons","","2. Bones, Vision, Antioxidant, Metabolism, Repair","","3. Monsters don't always stay under the bed.","","849- or sex","","Strutt's home number","","0");
         bindings.setKeysD(CryptoClass.keysD);
-
+        // Sample AdMob app ID: ca-app-pub-3940256099942544~3347511713
+        MobileAds.initialize(this, "ca-app-pub-3940256099942544~3347511713");
 //        setContentView(R.layout.activity_guess);
-
+        mAdView = findViewById(R.id.adView);
+        AdRequest adRequest = new AdRequest.Builder().build();
+        mAdView.loadAd(adRequest);
 
 
 
@@ -84,7 +90,7 @@ public class GuessActivity extends AppCompatActivity {
         mTextView=findViewById(R.id.LetterCounter);
 
 
-       CryptoClass.cl=new SqliteClass(this,false);
+       CryptoClass.cl=new SqliteClass(this);
 
         TextView private_tb = findViewById(R.id.private_tb);
         runnable = new CrackingClass(private_tb, CryptoClass.cl,this);
@@ -96,13 +102,16 @@ public class GuessActivity extends AppCompatActivity {
             CryptoClass.keysD.setPrivateKey(CryptoClass.insertPeriodically(lista.get(1), " ", 2));
             CryptoClass.keysD.setInputKey(lista.get(1));
             CryptoClass.keysD.setKeysCount(lista.get(0));
+            CryptoClass.keysD.setSolution1(lista.get(3));
+            CryptoClass.keysD.setSolution2(lista.get(4));
+            CryptoClass.keysD.setSolution3(lista.get(5));
         }
         else
-            {
+        {
             String message = CryptoClass.random();
             CryptoClass.keysD.setPrivateKey(CryptoClass.insertPeriodically(message, " ", 2));
             CryptoClass.keysD.setInputKey(message);
-                CryptoClass.cl=new SqliteClass(this,true);
+            CryptoClass.cl.update(true);
         }
         runTimer();
 
@@ -124,7 +133,7 @@ public class GuessActivity extends AppCompatActivity {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
         adapter.addFragment(new OneFragment(), "MAIN");
         adapter.addFragment(new TwoFragment(), "ADVANCED");
-
+        adapter.addFragment(new ThreeFragment(), "PUZZLE");
 
         viewPager.setAdapter(adapter);
 
@@ -311,9 +320,15 @@ startTimer();
         Button crackbutton=findViewById(R.id.private_public_button);
 
 
+        Button nextButton=findViewById(R.id.nextButton);
+        Button backButton=findViewById(R.id.backButton);
+        Button inputRiddle=findViewById(R.id.inputRiddle);
         private_button.setEnabled(false);
         random_button.setEnabled(false);
         crackbutton.setEnabled(false);
+        nextButton.setEnabled(false);
+        backButton.setEnabled(false);
+        inputRiddle.setEnabled(false);
         Button stopbutton=findViewById(R.id.crack_button);
         stopbutton.setText("Stop searching!");
     }
@@ -326,15 +341,27 @@ startTimer();
         Button private_button=findViewById(R.id.private_button);
         Button random_button=findViewById(R.id.random_button);
         Button crackbutton=findViewById(R.id.private_public_button);
-
+        Button nextButton=findViewById(R.id.nextButton);
+        Button backButton=findViewById(R.id.backButton);
+        Button inputRiddle=findViewById(R.id.inputRiddle);
         private_button.setEnabled(true);
         random_button.setEnabled(true);
         crackbutton.setEnabled(true);
+        nextButton.setEnabled(true);
+        backButton.setEnabled(true);
+        inputRiddle.setEnabled(true);
         Button stopbutton=findViewById(R.id.crack_button);
         stopbutton.setText("Start searching!");
-        CryptoClass.keysD.setInputKey(CryptoClass.remove_extra(CryptoClass.keysD.getPrivateKey()));
-
-        CryptoClass.cl.InsertSearchData(Integer.parseInt(CryptoClass.keysD.getKeysCount()), CryptoClass.remove_extra(CryptoClass.keysD.getPrivateKey()),seconds);
+        CryptoClass.keysD.setInputKey(CryptoClass.remove_extra(CryptoClass.keysD.getEndAddress()));
+        String s1=CryptoClass.remove_extra(CryptoClass.keysD.getPrivateKey()).substring(62,64);
+        String s2=CryptoClass.keysD.getEndAddress().substring(62,64);
+        int razlika = Integer.valueOf(CryptoClass.keysD.getKeysCount())- (Integer.valueOf(s1, 16)-Integer.valueOf(s2, 16));
+        CryptoClass.keysD.setKeysCount(Integer.toString(razlika));
+        CryptoClass.keysD.setPrivateKey(CryptoClass.insertPeriodically(CryptoClass.keysD.getEndAddress(), " ", 2));
+//        CryptoClass.cl.InsertSearchData(Integer.parseInt(CryptoClass.keysD.getKeysCount()), CryptoClass.remove_extra(CryptoClass.keysD.getPrivateKey()),seconds,
+//                CryptoClass.keysD.getSolution1(),CryptoClass.keysD.getSolution2(),CryptoClass.keysD.getSolution3());
+//
+//        CryptoClass.cl.InsertAddressData(CryptoClass.keysD.getStartAddress(),CryptoClass.remove_extra(CryptoClass.keysD.getPrivateKey()));
     }
 
     public void startTimer(){
@@ -360,9 +387,12 @@ startTimer();
                 int minutes = (seconds % 3600) / 60;
                 int sec = seconds % 60;
                 String time = String.format("%02d:%02d:%02d", hours, minutes, sec);
-                if(!runnable.get_running())
-                    stop_crack();
+
                 if(running) {
+
+                    if(!runnable.get_running())
+                        stop_crack();
+
                     CryptoClass.keysD.setTimer(time);
 
 

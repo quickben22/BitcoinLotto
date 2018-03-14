@@ -1,0 +1,190 @@
+
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+    <data>
+        <variable name="keysD" type="com.quickben22.bitcoinlotto.KeysData"/>
+    </data>
+<RelativeLayout
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.quickben22.bitcoinlotto.fragments.ThreeFragment">
+
+
+    <TextView
+        android:id="@+id/Riddle1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="70dp"
+        android:text="@={keysD.riddle1}"
+        android:textColor="#B3FFFF"
+        android:textSize="16sp" />
+
+    <TextView
+        android:id="@+id/Riddle2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="70dp"
+        android:visibility="gone"
+        android:text="@={keysD.riddle2}"
+        android:textColor="#B3FFFF"
+        android:textSize="16sp" />
+
+    <TextView
+        android:id="@+id/Riddle3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="70dp"
+        android:visibility="gone"
+        android:text="@={keysD.riddle3}"
+        android:textColor="#B3FFFF"
+        android:textSize="16sp" />
+    <TextView
+        android:id="@+id/Riddle4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="70dp"
+        android:visibility="gone"
+        android:text="@={keysD.riddle4}"
+        android:textColor="#B3FFFF"
+        android:textSize="16sp" />
+    <Button
+        android:id="@+id/nextButton"
+        android:layout_width="110dp"
+        android:layout_height="32dp"
+        android:layout_alignLeft="@+id/solutionText1"
+        android:layout_alignTop="@+id/Riddle1"
+
+        android:layout_marginLeft="120dp"
+        android:layout_marginTop="37dp"
+        android:background="@drawable/buttonshape"
+        android:shadowColor="#A8A8A8"
+        android:shadowDx="0"
+        android:shadowDy="0"
+        android:shadowRadius="5"
+        android:text="Next"
+        android:textColor="#FFFFFF" />
+
+    <Button
+        android:id="@+id/backButton"
+        android:layout_width="110dp"
+        android:layout_height="32dp"
+        android:layout_alignLeft="@+id/solutionText1"
+        android:layout_alignTop="@+id/Riddle1"
+        android:layout_marginLeft="-5dp"
+
+        android:layout_marginTop="37dp"
+        android:background="@drawable/buttonshape"
+        android:shadowColor="#A8A8A8"
+        android:shadowDx="0"
+        android:shadowDy="0"
+        android:shadowRadius="5"
+        android:text="Back"
+        android:textColor="#FFFFFF" />
+
+
+    <TextView
+        android:id="@+id/Solution"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/Riddle1"
+        android:text="Solution:"
+        android:layout_alignLeft="@+id/solutionText1"
+        android:textColor="#B3FFFF"
+        android:layout_marginTop="80dp"
+        android:textSize="16sp" />
+
+    <EditText
+        android:id="@+id/solutionText1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/Riddle1"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="107dp"
+        android:backgroundTint="@android:color/white"
+        android:textColor="#FFFFFF"
+        android:ems="10"
+        android:text="@={keysD.solution1}"
+         />
+
+    <EditText
+        android:id="@+id/solutionText2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/Riddle1"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="107dp"
+        android:backgroundTint="@android:color/white"
+        android:textColor="#FFFFFF"
+        android:ems="10"
+        android:text="@={keysD.solution2}"
+        android:visibility="gone" />
+
+    <EditText
+        android:id="@+id/solutionText3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/Riddle1"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="107dp"
+        android:backgroundTint="@android:color/white"
+        android:textColor="#FFFFFF"
+        android:ems="10"
+        android:text="@={keysD.solution3}"
+        android:visibility="gone" />
+    <EditText
+        android:id="@+id/solutionText4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/Riddle1"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="107dp"
+        android:backgroundTint="@android:color/white"
+        android:textColor="#FFFFFF"
+        android:ems="10"
+        android:text="@={keysD.solution4}"
+        android:visibility="gone" />
+    <TextView
+        android:id="@+id/SolutionCounter"
+        android:layout_width="35dp"
+        android:layout_height="25dp"
+        android:layout_alignRight="@id/solutionText1"
+        android:layout_alignTop="@id/solutionText1"
+
+        android:layout_marginRight="-40dp"
+        android:text="@={keysD.solutionCount}"
+        android:textColor="#FFFFFF" />
+
+    <Button
+        android:id="@+id/inputRiddle"
+        android:layout_width="200dp"
+        android:layout_height="40dp"
+        android:layout_below="@+id/solutionText1"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="23dp"
+        android:background="@drawable/buttonshape"
+        android:shadowColor="#A8A8A8"
+        android:shadowDx="0"
+        android:shadowDy="0"
+        android:shadowRadius="5"
+        android:text="Insert solutions"
+        android:textColor="#FFFFFF" />
+
+    <TextView
+        android:id="@+id/error1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/inputRiddle"
+        android:layout_centerHorizontal="true"
+        android:textColor="#FF0000"
+        android:visibility="gone"
+        android:layout_marginTop="42dp"
+        android:text="The solution length has to be 64!" />
+
+
+</RelativeLayout>
+</layout>

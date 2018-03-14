@@ -34,13 +34,21 @@ public class CrackingClass implements Runnable {
     public  boolean get_running(){return  running;}
     public  void set_running()
     {
-//        start=CryptoClass.remove_extra(CryptoClass.keysD.getPrivateKey());
-//        String[] povrat=sqlcl.CheckIfAlreadyChecked(start);
-//        if (povrat[1]!="") // vec je pregledan
-//        {
-//
-//
-//        }
+        start=CryptoClass.remove_extra(CryptoClass.keysD.getPrivateKey());
+        String[] povrat=sqlcl.CheckIfAlreadyChecked(start);
+        if (povrat[1]!="") // vec je pregledan
+        {
+
+            CryptoClass.keysD.setPrivateKey(CryptoClass.insertPeriodically(povrat[1], " ", 2));
+            CryptoClass.keysD.setEndAddress(povrat[1]);
+
+        }
+        else
+        {
+            sqlcl.InsertAddressData(povrat[0],povrat[0]);
+
+        }
+        CryptoClass.keysD.setStartAddress(povrat[0]);
         running=true;
     }
 
@@ -48,7 +56,7 @@ public class CrackingClass implements Runnable {
     public void run() {
 
         boolean ima_bingo=false;
-        if(CryptoClass.keysD.getPrivateKey().contains("BINGO"))
+        if(CryptoClass.keysD.getPrivateKey().contains("BINGO") || CryptoClass.keysD.getPrivateKey().contains("CHECKED"))
             ima_bingo=true;
         String PrivText = CryptoClass.remove_extra(CryptoClass.keysD.getPrivateKey());
         byte[] PrivHex = CryptoClass.hexStringToByteArray(PrivText);
@@ -90,9 +98,27 @@ public class CrackingClass implements Runnable {
 
 
                boolean flag=false;
-                if (k % 20 == 0)
+                if (k % 10 == 0)
                 {
-                    CryptoClass.cl.InsertSearchData(Integer.parseInt(CryptoClass.keysD.getKeysCount()), CryptoClass.remove_extra(CryptoClass.keysD.getPrivateKey()),0);
+                    CryptoClass.cl.InsertSearchData(Integer.parseInt(CryptoClass.keysD.getKeysCount()), CryptoClass.remove_extra(CryptoClass.keysD.getPrivateKey()),0,
+                            CryptoClass.keysD.getSolution1(),CryptoClass.keysD.getSolution2(),CryptoClass.keysD.getSolution3(),CryptoClass.keysD.getSolution4(),CryptoClass.keysD.getSolution5());
+
+                    String[] povrat=sqlcl.CheckIfAlreadyChecked(CryptoClass.remove_extra(CryptoClass.keysD.getPrivateKey()));
+                    if (povrat[1]!="") // vec je pregledan
+                    {
+                        CryptoClass.cl.InsertAddressData(CryptoClass.keysD.getStartAddress(), povrat[0]);
+                         PrivHex = CryptoClass.hexStringToByteArray(povrat[1]);
+                        ispis=    CryptoClass.insertPeriodically(povrat[1]," ",2);
+                        CryptoClass.keysD.setEndAddress(povrat[1]);
+                        CryptoClass.keysD.setStartAddress(povrat[0]);
+
+                    }
+                    else {
+                        CryptoClass.cl.InsertAddressData(CryptoClass.keysD.getStartAddress(), CryptoClass.remove_extra(CryptoClass.keysD.getPrivateKey()));
+                    }
+
+
+
 
                     ArrayList<String> izlaz= sqlcl.CheckIsDataAlreadyInDBorNot(list,list2);
                     if(izlaz.size()>0)
@@ -112,7 +138,8 @@ public class CrackingClass implements Runnable {
                         new Runnable() {
                     @Override
                     public void run() {
-                        CryptoClass.keysD.setPrivateKey(updateWords);
+                        if(running)
+                            CryptoClass.keysD.setPrivateKey(updateWords);
                         //                            private_tb.setText(updateWords);
                         if(updateColor) {
 

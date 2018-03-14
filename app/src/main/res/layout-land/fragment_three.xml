@@ -1,0 +1,96 @@
+
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+    <data>
+        <variable name="keysD" type="com.quickben22.bitcoinlotto.KeysData"/>
+    </data>
+<RelativeLayout
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.quickben22.bitcoinlotto.fragments.ThreeFragment">
+
+
+    <TextView
+        android:id="@+id/combinations_tb"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/textView"
+        android:layout_alignLeft="@+id/textView"
+        android:layout_alignStart="@+id/textView"
+        android:layout_marginBottom="23dp"
+        android:text="@={keysD.keysCount}"
+        android:textColor="#B3FFFF"
+        android:textSize="36sp" />
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/duration_tb"
+        android:layout_marginBottom="13dp"
+        android:layout_marginLeft="99dp"
+        android:layout_marginStart="99dp"
+        android:layout_toEndOf="@+id/textView2"
+        android:text="KEYS"
+        android:textColor="#B3FFFF" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/textView3"
+        android:layout_alignBottom="@+id/textView3"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginLeft="89dp"
+        android:layout_marginStart="89dp"
+        android:text="DURATION"
+        android:textColor="#B3FFFF" />
+
+    <TextView
+        android:id="@+id/duration_tb"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/textView2"
+        android:layout_alignLeft="@+id/textView2"
+        android:layout_alignStart="@+id/textView2"
+        android:text="@={keysD.timer}"
+        android:textColor="#B3FFFF"
+        android:textSize="36sp" />
+
+    <TextView
+        android:id="@+id/speed_tb"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/textView4"
+        android:layout_toEndOf="@+id/combinations_tb"
+        android:layout_toRightOf="@+id/combinations_tb"
+        android:text="@={keysD.speed}"
+        android:textColor="#B3FFFF"
+        android:textSize="36sp" />
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/speed_tb"
+        android:layout_alignParentTop="true"
+        android:layout_alignStart="@+id/speed_tb"
+        android:layout_marginTop="123dp"
+        android:text="KEY FREQUENCY"
+        android:textColor="#B3FFFF" />
+
+    <TextView
+        android:id="@+id/textView4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/textView3"
+        android:layout_alignLeft="@+id/combinations_tb"
+        android:layout_marginBottom="20dp"
+        android:layout_marginLeft="100dp"
+        android:text="KEYS/SEC"
+        android:textColor="#B3FFFF"
+        android:textSize="12sp" />
+</RelativeLayout>
+</layout>

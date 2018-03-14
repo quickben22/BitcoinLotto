@@ -24,9 +24,9 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 
     private SQLiteDatabase mDataBase;
     private final Context mContext;
-    private boolean mNeedUpdate = false;
+    private boolean mNeedUpdate = true;
 
-    public DataBaseHelper(Context context,boolean update) {
+    public DataBaseHelper(Context context) {
         super(context, DB_NAME, null, DB_VERSION);
         if (android.os.Build.VERSION.SDK_INT >= 17)
             DB_PATH = context.getApplicationInfo().dataDir + "/databases/";
@@ -35,8 +35,13 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         this.mContext = context;
 
         copyDataBase();
-        mNeedUpdate=update;
+
         this.getReadableDatabase();
+    }
+
+    public void setmNeedUpdate(boolean b)
+    {
+        mNeedUpdate=b;
     }
 
     public void updateDataBase() throws IOException {

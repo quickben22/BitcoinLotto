@@ -18,7 +18,7 @@
             android:layout_alignLeft="@+id/random_button"
             android:layout_alignStart="@+id/random_button"
             android:layout_below="@+id/private_tx"
-            android:layout_marginTop="42dp"
+            android:layout_marginTop="22dp"
             android:background="@drawable/buttonshape"
             android:shadowColor="#A8A8A8"
             android:shadowDx="0"
@@ -36,7 +36,6 @@
             android:layout_alignBottom="@+id/LetterCounter"
             android:backgroundTint="@android:color/white"
             android:ems="10"
-            android:inputType="textPersonName"
             android:text="@={keysD.inputKey}"
             android:textColor="#FFFFFF" />
 
@@ -46,7 +45,7 @@
             android:layout_width="35dp"
             android:layout_height="25dp"
             android:layout_alignParentBottom="true"
-            android:layout_marginBottom="390dp"
+            android:layout_marginBottom="410dp"
             android:layout_marginLeft="10dp"
             android:layout_toEndOf="@+id/private_button"
             android:layout_toRightOf="@+id/private_button"
