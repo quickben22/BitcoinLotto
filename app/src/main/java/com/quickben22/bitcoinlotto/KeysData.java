@@ -30,9 +30,11 @@ public class KeysData extends BaseObservable {
     private String solution4;
     private String riddle5;
     private String solution5;
+    private String riddle6;
+    private String solution6;
     public KeysData(String PrivateKey, String PublicKey_uncompressed,String PublicKey_compressed,String InputKey,String CharacterCount,String KeysCount,
                     String Timer,String Speed,String StartAddress,String EndAddress,String Riddle1,String Solution1,String Riddle2,String Solution2,String Riddle3,String Solution3,
-                    String Riddle4,String Solution4,String Riddle5,String Solution5,String SolutionCount  ) {
+                    String Riddle4,String Solution4,String Riddle5,String Solution5,String Riddle6,String Solution6,String SolutionCount  ) {
         this.privateKey = PrivateKey;
         this.publicKey_uncompressed = PublicKey_uncompressed;
         this.publicKey_compressed = PublicKey_compressed;
@@ -54,6 +56,8 @@ public class KeysData extends BaseObservable {
         this.solution4 = Solution4;
         this.riddle5 = Riddle5;
         this.solution5 = Solution5;
+        this.riddle6 = Riddle6;
+        this.solution6 = Solution6;
     }
 
     @Bindable
@@ -106,7 +110,10 @@ public class KeysData extends BaseObservable {
     public String getRiddle5() {return riddle5;}
     @Bindable
     public String getSolution5() {return solution5;}
-
+    @Bindable
+    public String getRiddle6() {return riddle6;}
+    @Bindable
+    public String getSolution6() {return solution6;}
     public  void setPrivateKey(String PrivateKey){
         this.privateKey = PrivateKey;
         notifyPropertyChanged(BR.privateKey);
@@ -185,7 +192,7 @@ public class KeysData extends BaseObservable {
         notifyPropertyChanged(BR.riddle4);
     }
     public void setSolution4(String Solution4) {
-        this.solution3 = Solution4;
+        this.solution4 = Solution4;
         this.solutionCount= zbroj();
         notifyPropertyChanged(BR.solutionCount);
         notifyPropertyChanged(BR.solution4);
@@ -195,10 +202,21 @@ public class KeysData extends BaseObservable {
         notifyPropertyChanged(BR.riddle5);
     }
     public void setSolution5(String Solution5) {
-        this.solution3 = Solution5;
+        this.solution5 = Solution5;
         this.solutionCount= zbroj();
         notifyPropertyChanged(BR.solutionCount);
         notifyPropertyChanged(BR.solution5);
+    }
+
+    public void setRiddle6(String Riddle6) {
+        this.riddle6 = Riddle6;
+        notifyPropertyChanged(BR.riddle6);
+    }
+    public void setSolution6(String Solution6) {
+        this.solution6 = Solution6;
+        this.solutionCount= zbroj();
+        notifyPropertyChanged(BR.solutionCount);
+        notifyPropertyChanged(BR.solution6);
     }
     
     

@@ -28,10 +28,10 @@ import android.view.animation.Animation.AnimationListener;
 public class ThreeFragment extends Fragment{
 
 
-    ArrayList<TextView> riddles;
-    ArrayList<EditText> solutions;
-int selected=0;
-int duzina=1;
+  private  ArrayList<TextView> riddles;
+  private  ArrayList<EditText> solutions;
+private int selected=0;
+private int duzina=1;
     public ThreeFragment() {
         // Required empty public constructor
     }
@@ -62,15 +62,27 @@ int duzina=1;
         TextView t1 =  view.findViewById(R.id.Riddle1);
         TextView t2 =  view.findViewById(R.id.Riddle2);
         TextView t3 =  view.findViewById(R.id.Riddle3);
+        TextView t4 =  view.findViewById(R.id.Riddle4);
+        TextView t5 =  view.findViewById(R.id.Riddle5);
+        TextView t6 =  view.findViewById(R.id.Riddle6);
         riddles.add(t1);
         riddles.add(t2);
         riddles.add(t3);
+        riddles.add(t4);
+        riddles.add(t5);
+        riddles.add(t6);
         EditText e1 =  view.findViewById(R.id.solutionText1);
         EditText e2 =  view.findViewById(R.id.solutionText2);
         EditText e3 =  view.findViewById(R.id.solutionText3);
+        EditText e4 =  view.findViewById(R.id.solutionText4);
+        EditText e5 =  view.findViewById(R.id.solutionText5);
+        EditText e6 =  view.findViewById(R.id.solutionText6);
         solutions.add(e1);
         solutions.add(e2);
         solutions.add(e3);
+        solutions.add(e4);
+        solutions.add(e5);
+        solutions.add(e6);
         duzina=solutions.size();
 
         Button next_button = (Button) view.findViewById(R.id.nextButton);

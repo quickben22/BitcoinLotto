@@ -30,12 +30,14 @@
 
         <EditText
             android:id="@+id/private_tx"
-            android:layout_width="310dp"
-            android:layout_height="45dp"
-            android:layout_alignBaseline="@+id/LetterCounter"
+            android:maxLines="1"
+            android:layout_width="256dp"
+            android:layout_height="wrap_content"
+            android:inputType="text"
             android:layout_alignBottom="@+id/LetterCounter"
+            android:layout_alignLeft="@+id/random_button"
+            android:layout_marginRight="50dp"
             android:backgroundTint="@android:color/white"
-            android:ems="10"
             android:text="@={keysD.inputKey}"
             android:textColor="#FFFFFF" />
 

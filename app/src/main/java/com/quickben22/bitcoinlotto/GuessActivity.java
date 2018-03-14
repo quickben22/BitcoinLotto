@@ -42,7 +42,8 @@ import android.os.Handler;
 
 public class GuessActivity extends AppCompatActivity {
 
-
+    private Thread myThread = null;
+    private CrackingClass runnable = null;
     private Toolbar toolbar;
     private TabLayout tabLayout;
     private ViewPager viewPager;
@@ -60,7 +61,10 @@ public class GuessActivity extends AppCompatActivity {
 
         ContentGuessBinding bindings = DataBindingUtil.setContentView(this, R.layout.content_guess);
         CryptoClass.keysD = new KeysData("","","","",
-                "0","0","00:00:00","0","","","1. 5 Black Dragons","","2. Bones, Vision, Antioxidant, Metabolism, Repair","","3. Monsters don't always stay under the bed.","","849- or sex","","Strutt's home number","","0");
+                "0","0","00:00:00","0","","","1. 5 Black Dragons","",
+                "2. Bones, Vision, Antioxidant, Metabolism, Repair","","3. Monsters don't always stay under the bed.",
+                "","849- or sex","","Strutt's home number","","Bickle's workplace(4)","",
+                "0");
         bindings.setKeysD(CryptoClass.keysD);
         // Sample AdMob app ID: ca-app-pub-3940256099942544~3347511713
         MobileAds.initialize(this, "ca-app-pub-3940256099942544~3347511713");
@@ -136,7 +140,7 @@ public class GuessActivity extends AppCompatActivity {
         adapter.addFragment(new ThreeFragment(), "PUZZLE");
 
         viewPager.setAdapter(adapter);
-
+        viewPager.setOffscreenPageLimit(2);
     }
 
     class ViewPagerAdapter extends FragmentPagerAdapter {
@@ -161,6 +165,7 @@ public class GuessActivity extends AppCompatActivity {
             mFragmentList.add(fragment);
             mFragmentTitleList.add(title);
         }
+
 
         @Override
         public CharSequence getPageTitle(int position) {
@@ -238,15 +243,7 @@ public class GuessActivity extends AppCompatActivity {
 
 
 
-<<<<<<< HEAD
 
-        closeThread();
-=======
-    private Thread myThread = null;
-    private CrackingClass runnable = null;
->>>>>>> e9fdea0d4fb485f9a648a9815b20e35e86da2072
-
-    /** Called when the user taps the Send button */
 
 
     public  boolean closeThread()
