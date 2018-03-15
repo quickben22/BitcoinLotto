@@ -9,6 +9,9 @@ import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AccelerateInterpolator;
+import android.view.animation.AlphaAnimation;
+import android.view.animation.Animation;
 import android.widget.Button;
 import android.widget.EditText;
 import android.content.ClipboardManager;
@@ -53,6 +56,7 @@ public class TwoFragment extends Fragment{
 
 
         Button private_input_button = (Button) view.findViewById(R.id.private_button);
+        final TextView mSwitcher = (TextView) view.findViewById(R.id.error3);
 
 
 
@@ -63,8 +67,17 @@ public class TwoFragment extends Fragment{
 //                TextView private_tb = (TextView)  getView().findViewById(R.id.private_tb);
 //                EditText mEditText = (EditText)  getView().findViewById(R.id.private_tx);
         String message= CryptoClass.GetPrivateKey(CryptoClass.keysD.getInputKey());
-        if(CryptoClass.keysD.getCharacterCount().equals("64"))
-            CryptoClass.keysD.setPrivateKey(CryptoClass.insertPeriodically(message," ",2));
+                boolean isHex = message.toUpperCase().matches("[0-9A-F]+");
+        if(CryptoClass.keysD.getCharacterCount().equals("64") && isHex) {
+
+                CryptoClass.keysD.setPrivateKey(CryptoClass.insertPeriodically(message, " ", 2));
+        }
+        else
+        {
+            mSwitcher.setVisibility(View.VISIBLE);
+            fadeOutAndHideImage(mSwitcher);
+
+        }
 
 
             }
@@ -175,7 +188,24 @@ public class TwoFragment extends Fragment{
         }
     };
 
+    private void fadeOutAndHideImage(final TextView img)
+    {
+        Animation fadeOut = new AlphaAnimation(1, 0);
+        fadeOut.setInterpolator(new AccelerateInterpolator());
+        fadeOut.setDuration(3000);
 
+        fadeOut.setAnimationListener(new Animation.AnimationListener()
+        {
+            public void onAnimationEnd(Animation animation)
+            {
+                img.setVisibility(View.GONE);
+            }
+            public void onAnimationRepeat(Animation animation) {}
+            public void onAnimationStart(Animation animation) {}
+        });
+
+        img.startAnimation(fadeOut);
+    }
 
 
 

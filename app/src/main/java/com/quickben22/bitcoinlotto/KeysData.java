@@ -32,9 +32,15 @@ public class KeysData extends BaseObservable {
     private String solution5;
     private String riddle6;
     private String solution6;
+    private String riddle7;
+    private String solution7;
+    private String riddle8;
+    private String solution8;
+    private String myKey;
     public KeysData(String PrivateKey, String PublicKey_uncompressed,String PublicKey_compressed,String InputKey,String CharacterCount,String KeysCount,
                     String Timer,String Speed,String StartAddress,String EndAddress,String Riddle1,String Solution1,String Riddle2,String Solution2,String Riddle3,String Solution3,
-                    String Riddle4,String Solution4,String Riddle5,String Solution5,String Riddle6,String Solution6,String SolutionCount  ) {
+                    String Riddle4,String Solution4,String Riddle5,String Solution5,String Riddle6,String Solution6,String Riddle7,String Solution7,String Riddle8,String Solution8,
+                    String SolutionCount,String MyKey   ) {
         this.privateKey = PrivateKey;
         this.publicKey_uncompressed = PublicKey_uncompressed;
         this.publicKey_compressed = PublicKey_compressed;
@@ -58,6 +64,11 @@ public class KeysData extends BaseObservable {
         this.solution5 = Solution5;
         this.riddle6 = Riddle6;
         this.solution6 = Solution6;
+        this.riddle7 = Riddle7;
+        this.solution7 = Solution7;
+        this.riddle8 = Riddle8;
+        this.solution8 = Solution8;
+        this.myKey = MyKey;
     }
 
     @Bindable
@@ -114,6 +125,17 @@ public class KeysData extends BaseObservable {
     public String getRiddle6() {return riddle6;}
     @Bindable
     public String getSolution6() {return solution6;}
+    @Bindable
+    public String getRiddle7() {return riddle7;}
+    @Bindable
+    public String getSolution7() {return solution7;}
+    @Bindable
+    public String getRiddle8() {return riddle8;}
+    @Bindable
+    public String getSolution8() {return solution8;}
+    @Bindable
+    public String getMyKey() {return myKey;}
+    
     public  void setPrivateKey(String PrivateKey){
         this.privateKey = PrivateKey;
         notifyPropertyChanged(BR.privateKey);
@@ -218,16 +240,38 @@ public class KeysData extends BaseObservable {
         notifyPropertyChanged(BR.solutionCount);
         notifyPropertyChanged(BR.solution6);
     }
-    
-    
+    public void setRiddle7(String Riddle7) {
+        this.riddle7 = Riddle7;
+        notifyPropertyChanged(BR.riddle7);
+    }
+    public void setSolution7(String Solution7) {
+        this.solution7 = Solution7;
+        this.solutionCount= zbroj();
+        notifyPropertyChanged(BR.solutionCount);
+        notifyPropertyChanged(BR.solution7);
+    }
+    public void setRiddle8(String Riddle8) {
+        this.riddle8 = Riddle8;
+        notifyPropertyChanged(BR.riddle8);
+    }
+    public void setSolution8(String Solution8) {
+        this.solution8 = Solution8;
+        this.solutionCount= zbroj();
+        notifyPropertyChanged(BR.solutionCount);
+        notifyPropertyChanged(BR.solution8);
+    }
     public void setSolutionCount(String SolutionCount) {
         this.solutionCount = SolutionCount;
         notifyPropertyChanged(BR.solutionCount);
     }
-
+    public void setMyKey(String MyKey) {
+        this.myKey = MyKey;
+        notifyPropertyChanged(BR.myKey);
+    }
+    
     private String zbroj()
     {
-        return  String.valueOf(this.solution1.length()+this.solution2.length()+this.solution3.length()+this.solution4.length()+this.solution5.length());
+        return  String.valueOf(this.solution1.length()+this.solution2.length()+this.solution3.length()+this.solution4.length()+this.solution5.length()+this.solution6.length()+this.solution7.length()+this.solution8.length());
 
     }
 

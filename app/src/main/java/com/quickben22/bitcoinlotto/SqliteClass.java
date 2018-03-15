@@ -95,7 +95,7 @@ public class SqliteClass {
         return list;
     }
 
-    public  boolean InsertSearchData( int a, String b, int c,String d,String e2,String f,String g, String h) {
+    public  boolean InsertSearchData( int a, String b, int c,String d,String e2,String f,String g, String h, String i, String j, String k) {
 
 
 
@@ -111,6 +111,9 @@ public class SqliteClass {
         initialValues.put("solution3", f);
         initialValues.put("solution4", g);
         initialValues.put("solution5", h);
+        initialValues.put("solution6", i);
+        initialValues.put("solution7", j);
+        initialValues.put("solution8", k);
         try {
 
             int id = (int) mDb.insertWithOnConflict(TABLE_NAME2, null, initialValues, SQLiteDatabase.CONFLICT_IGNORE);
@@ -222,6 +225,10 @@ public class SqliteClass {
                 String s2 = cursor.getString(cursor.getColumnIndex("solution2"));
                 String s3 = cursor.getString(cursor.getColumnIndex("solution3"));
                 String s4 = cursor.getString(cursor.getColumnIndex("solution4"));
+                String s5 = cursor.getString(cursor.getColumnIndex("solution5"));
+                String s6 = cursor.getString(cursor.getColumnIndex("solution6"));
+                String s7 = cursor.getString(cursor.getColumnIndex("solution7"));
+                String s8 = cursor.getString(cursor.getColumnIndex("solution8"));
                 list.add(combinations);
                 list.add(last_a);
                 list.add(time);
@@ -229,6 +236,10 @@ public class SqliteClass {
                 list.add(s2);
                 list.add(s3);
                 list.add(s4);
+                list.add(s5);
+                list.add(s6);
+                list.add(s7);
+                list.add(s8);
                 cursor.moveToNext();
             }
 

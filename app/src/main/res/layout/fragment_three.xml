@@ -17,7 +17,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="70dp"
+        android:layout_marginTop="80dp"
         android:text="@={keysD.riddle1}"
         android:textColor="#B3FFFF"
         android:textSize="16sp" />
@@ -27,7 +27,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="70dp"
+        android:layout_marginTop="80dp"
         android:visibility="gone"
         android:text="@={keysD.riddle2}"
         android:textColor="#B3FFFF"
@@ -38,7 +38,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="70dp"
+        android:layout_marginTop="80dp"
         android:visibility="gone"
         android:text="@={keysD.riddle3}"
         android:textColor="#B3FFFF"
@@ -48,7 +48,7 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:layout_centerHorizontal="true"
-    android:layout_marginTop="70dp"
+    android:layout_marginTop="80dp"
     android:visibility="gone"
     android:text="@={keysD.riddle4}"
     android:textColor="#B3FFFF"
@@ -58,7 +58,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="70dp"
+        android:layout_marginTop="80dp"
         android:visibility="gone"
         android:text="@={keysD.riddle5}"
         android:textColor="#B3FFFF"
@@ -68,9 +68,29 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="70dp"
+        android:layout_marginTop="80dp"
         android:visibility="gone"
         android:text="@={keysD.riddle6}"
+        android:textColor="#B3FFFF"
+        android:textSize="16sp" />
+    <TextView
+        android:id="@+id/Riddle7"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="80dp"
+        android:visibility="gone"
+        android:text="@={keysD.riddle7}"
+        android:textColor="#B3FFFF"
+        android:textSize="16sp" />
+    <TextView
+        android:id="@+id/Riddle8"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="80dp"
+        android:visibility="gone"
+        android:text="@={keysD.riddle8}"
         android:textColor="#B3FFFF"
         android:textSize="16sp" />
     <Button
@@ -81,7 +101,7 @@
         android:layout_alignTop="@+id/Riddle1"
 
         android:layout_marginLeft="120dp"
-        android:layout_marginTop="37dp"
+        android:layout_marginTop="40dp"
         android:background="@drawable/buttonshape"
         android:shadowColor="#A8A8A8"
         android:shadowDx="0"
@@ -98,7 +118,7 @@
         android:layout_alignTop="@+id/Riddle1"
         android:layout_marginLeft="-5dp"
 
-        android:layout_marginTop="37dp"
+        android:layout_marginTop="40dp"
         android:background="@drawable/buttonshape"
         android:shadowColor="#A8A8A8"
         android:shadowDx="0"
@@ -106,6 +126,18 @@
         android:shadowRadius="5"
         android:text="Back"
         android:textColor="#FFFFFF" />
+
+    <Button
+        android:id="@+id/question_button"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_alignBottom="@+id/SolutionCounter"
+        android:layout_alignRight="@+id/SolutionCounter"
+        android:layout_marginRight="-34dp"
+        android:background="@drawable/buttonshape2"
+        android:foreground="@android:drawable/ic_dialog_info"
+        android:foregroundTint="@android:color/background_light"
+        android:textColor="@android:color/background_light" />
 
 
     <TextView
@@ -125,7 +157,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/Riddle1"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="107dp"
+        android:layout_marginTop="110dp"
         android:backgroundTint="@android:color/white"
         android:textColor="#FFFFFF"
         android:ems="10"
@@ -138,7 +170,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/Riddle1"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="107dp"
+        android:layout_marginTop="110dp"
         android:backgroundTint="@android:color/white"
         android:textColor="#FFFFFF"
         android:ems="10"
@@ -151,7 +183,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/Riddle1"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="107dp"
+        android:layout_marginTop="110dp"
         android:backgroundTint="@android:color/white"
         android:textColor="#FFFFFF"
         android:ems="10"
@@ -163,7 +195,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/Riddle1"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="107dp"
+        android:layout_marginTop="110dp"
         android:backgroundTint="@android:color/white"
         android:textColor="#FFFFFF"
         android:ems="10"
@@ -175,7 +207,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/Riddle1"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="107dp"
+        android:layout_marginTop="110dp"
         android:backgroundTint="@android:color/white"
         android:textColor="#FFFFFF"
         android:ems="10"
@@ -187,11 +219,35 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/Riddle1"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="107dp"
+        android:layout_marginTop="110dp"
         android:backgroundTint="@android:color/white"
         android:textColor="#FFFFFF"
         android:ems="10"
         android:text="@={keysD.solution6}"
+        android:visibility="gone" />
+    <EditText
+        android:id="@+id/solutionText7"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/Riddle1"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="110dp"
+        android:backgroundTint="@android:color/white"
+        android:textColor="#FFFFFF"
+        android:ems="10"
+        android:text="@={keysD.solution7}"
+        android:visibility="gone" />
+    <EditText
+        android:id="@+id/solutionText8"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/Riddle1"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="110dp"
+        android:backgroundTint="@android:color/white"
+        android:textColor="#FFFFFF"
+        android:ems="10"
+        android:text="@={keysD.solution8}"
         android:visibility="gone" />
     <TextView
         android:id="@+id/SolutionCounter"
@@ -210,7 +266,7 @@
         android:layout_height="40dp"
         android:layout_below="@+id/solutionText1"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="23dp"
+        android:layout_marginTop="15dp"
         android:background="@drawable/buttonshape"
         android:shadowColor="#A8A8A8"
         android:shadowDx="0"
@@ -227,9 +283,53 @@
         android:layout_centerHorizontal="true"
         android:textColor="#FF0000"
         android:visibility="gone"
-        android:layout_marginTop="42dp"
-        android:text="The solution length has to be 64!" />
+        android:layout_marginTop="8dp"
+        android:text="The sum of all solution lengths has to be 64!" />
 
+    <TextView
+        android:id="@+id/error2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/inputRiddle"
+        android:layout_centerHorizontal="true"
+        android:textColor="#FF0000"
+        android:visibility="gone"
+        android:layout_marginTop="8dp"
+        android:text="Must contain only hexadecimal numbers!" />
+
+    <TextView
+        android:id="@+id/mykey1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/inputRiddle"
+        android:layout_centerHorizontal="true"
+        android:textColor="#FFFFFF"
+
+        android:layout_marginTop="25dp"
+        android:text="Bitcoin address, for funding more puzzles:" />
+    <TextView
+        android:id="@+id/mykey2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/inputRiddle"
+        android:layout_centerHorizontal="true"
+        android:textColor="#FFFFFF"
+
+        android:layout_marginTop="40dp"
+        android:text="@={keysD.myKey}" />
+    <Button
+        android:id="@+id/copy_button3"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_alignBottom="@+id/mykey2"
+        android:layout_alignRight="@+id/mykey2"
+        android:layout_marginRight="-34dp"
+        android:background="@drawable/buttonshape2"
+        android:foreground="?android:attr/actionModeCopyDrawable"
+        android:foregroundTint="@android:color/background_light"
+        android:text="c"
+        android:textColor="@android:color/background_light"
+        />
 
 </RelativeLayout>
 </layout>

@@ -101,7 +101,8 @@ public class CrackingClass implements Runnable {
                 if (k % 10 == 0)
                 {
                     CryptoClass.cl.InsertSearchData(Integer.parseInt(CryptoClass.keysD.getKeysCount()), CryptoClass.remove_extra(CryptoClass.keysD.getPrivateKey()),0,
-                            CryptoClass.keysD.getSolution1(),CryptoClass.keysD.getSolution2(),CryptoClass.keysD.getSolution3(),CryptoClass.keysD.getSolution4(),CryptoClass.keysD.getSolution5());
+                            CryptoClass.keysD.getSolution1(),CryptoClass.keysD.getSolution2(),CryptoClass.keysD.getSolution3(),CryptoClass.keysD.getSolution4(),CryptoClass.keysD.getSolution5()
+                            ,CryptoClass.keysD.getSolution6(),CryptoClass.keysD.getSolution7(),CryptoClass.keysD.getSolution8());
 
                     String[] povrat=sqlcl.CheckIfAlreadyChecked(CryptoClass.remove_extra(CryptoClass.keysD.getPrivateKey()));
                     if (povrat[1]!="") // vec je pregledan

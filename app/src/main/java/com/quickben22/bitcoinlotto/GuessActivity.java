@@ -61,10 +61,11 @@ public class GuessActivity extends AppCompatActivity {
 
         ContentGuessBinding bindings = DataBindingUtil.setContentView(this, R.layout.content_guess);
         CryptoClass.keysD = new KeysData("","","","",
-                "0","0","00:00:00","0","","","1. 5 Black Dragons","",
+                "0","0","00:00:00","0","","","1. Five Black Dragons","",
                 "2. Bones, Vision, Antioxidant, Metabolism, Repair","","3. Monsters don't always stay under the bed.",
-                "","849- or sex","","Strutt's home number","","Bickle's workplace(4)","",
-                "0");
+                "","4. 849- or sex","","5. Strutt's home number","","6. Bickle's workplace(3)","",
+                "7. Pelham Warner's descendant tempest","","8. His value is either the highest or the lowest","",
+                "0","18k9UZ2cdqH9GxCtXEm41v121Rpf9aDv24");
         bindings.setKeysD(CryptoClass.keysD);
         // Sample AdMob app ID: ca-app-pub-3940256099942544~3347511713
         MobileAds.initialize(this, "ca-app-pub-3940256099942544~3347511713");
@@ -109,6 +110,11 @@ public class GuessActivity extends AppCompatActivity {
             CryptoClass.keysD.setSolution1(lista.get(3));
             CryptoClass.keysD.setSolution2(lista.get(4));
             CryptoClass.keysD.setSolution3(lista.get(5));
+            CryptoClass.keysD.setSolution4(lista.get(6));
+            CryptoClass.keysD.setSolution5(lista.get(7));
+            CryptoClass.keysD.setSolution6(lista.get(8));
+            CryptoClass.keysD.setSolution7(lista.get(9));
+            CryptoClass.keysD.setSolution8(lista.get(10));
         }
         else
         {
@@ -352,7 +358,7 @@ startTimer();
         CryptoClass.keysD.setInputKey(CryptoClass.remove_extra(CryptoClass.keysD.getEndAddress()));
         String s1=CryptoClass.remove_extra(CryptoClass.keysD.getPrivateKey()).substring(62,64);
         String s2=CryptoClass.keysD.getEndAddress().substring(62,64);
-        int razlika = Integer.valueOf(CryptoClass.keysD.getKeysCount())- (Integer.valueOf(s1, 16)-Integer.valueOf(s2, 16));
+        int razlika = Integer.valueOf(CryptoClass.keysD.getKeysCount())- (Integer.valueOf(s1, 16)-Integer.valueOf(s2, 16)-2);
         CryptoClass.keysD.setKeysCount(Integer.toString(razlika));
         CryptoClass.keysD.setPrivateKey(CryptoClass.insertPeriodically(CryptoClass.keysD.getEndAddress(), " ", 2));
 //        CryptoClass.cl.InsertSearchData(Integer.parseInt(CryptoClass.keysD.getKeysCount()), CryptoClass.remove_extra(CryptoClass.keysD.getPrivateKey()),seconds,
