@@ -7,7 +7,7 @@ android {
         applicationId "com.quickben22.bitcoinlotto"
         minSdkVersion 15
         targetSdkVersion 26
-        versionCode 3
+        versionCode 4
         versionName "alfa 1.1"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }

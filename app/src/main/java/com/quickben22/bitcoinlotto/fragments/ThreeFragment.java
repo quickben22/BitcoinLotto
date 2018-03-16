@@ -72,6 +72,8 @@ private int duzina=1;
         TextView t6 =  view.findViewById(R.id.Riddle6);
         TextView t7 =  view.findViewById(R.id.Riddle7);
         TextView t8 =  view.findViewById(R.id.Riddle8);
+        TextView t9 =  view.findViewById(R.id.Riddle9);
+        TextView t10 =  view.findViewById(R.id.Riddle10);
         riddles.add(t1);
         riddles.add(t2);
         riddles.add(t3);
@@ -80,6 +82,8 @@ private int duzina=1;
         riddles.add(t6);
         riddles.add(t7);
         riddles.add(t8);
+        riddles.add(t9);
+        riddles.add(t10);
         EditText e1 =  view.findViewById(R.id.solutionText1);
         EditText e2 =  view.findViewById(R.id.solutionText2);
         EditText e3 =  view.findViewById(R.id.solutionText3);
@@ -88,6 +92,8 @@ private int duzina=1;
         EditText e6 =  view.findViewById(R.id.solutionText6);
         EditText e7 =  view.findViewById(R.id.solutionText7);
         EditText e8 =  view.findViewById(R.id.solutionText8);
+        EditText e9 =  view.findViewById(R.id.solutionText9);
+        EditText e10 =  view.findViewById(R.id.solutionText10);
         solutions.add(e1);
         solutions.add(e2);
         solutions.add(e3);
@@ -96,6 +102,8 @@ private int duzina=1;
         solutions.add(e6);
         solutions.add(e7);
         solutions.add(e8);
+        solutions.add(e9);
+        solutions.add(e10);
         duzina=solutions.size();
 
         Button next_button = (Button) view.findViewById(R.id.nextButton);
@@ -108,9 +116,7 @@ private int duzina=1;
                 selected=(selected+1)%duzina;
                 riddles.get(selected).setVisibility(View.VISIBLE);
                 solutions.get(selected).setVisibility(View.VISIBLE);
-                CryptoClass.cl.InsertSearchData(Integer.parseInt(CryptoClass.keysD.getKeysCount()), CryptoClass.remove_extra(CryptoClass.keysD.getPrivateKey()),0,
-                        CryptoClass.keysD.getSolution1(),CryptoClass.keysD.getSolution2(),CryptoClass.keysD.getSolution3(),CryptoClass.keysD.getSolution4(),CryptoClass.keysD.getSolution5()
-                        ,CryptoClass.keysD.getSolution6(),CryptoClass.keysD.getSolution7(),CryptoClass.keysD.getSolution8());
+                insert();
 
             }
         });
@@ -124,9 +130,7 @@ private int duzina=1;
                 selected=(duzina+selected-1)%duzina;
                 riddles.get(selected).setVisibility(View.VISIBLE);
                 solutions.get(selected).setVisibility(View.VISIBLE);
-                CryptoClass.cl.InsertSearchData(Integer.parseInt(CryptoClass.keysD.getKeysCount()), CryptoClass.remove_extra(CryptoClass.keysD.getPrivateKey()),0,
-                        CryptoClass.keysD.getSolution1(),CryptoClass.keysD.getSolution2(),CryptoClass.keysD.getSolution3(),CryptoClass.keysD.getSolution4(),CryptoClass.keysD.getSolution5()
-                        ,CryptoClass.keysD.getSolution6(),CryptoClass.keysD.getSolution7(),CryptoClass.keysD.getSolution8());
+                insert();
             }
         });
 
@@ -142,7 +146,8 @@ private int duzina=1;
             public void onClick(View v) {
 
                 String message=CryptoClass.keysD.getSolution1()+CryptoClass.keysD.getSolution2()+CryptoClass.keysD.getSolution3()+
-                        CryptoClass.keysD.getSolution4()+CryptoClass.keysD.getSolution5()+CryptoClass.keysD.getSolution6()+CryptoClass.keysD.getSolution7()+CryptoClass.keysD.getSolution8();
+                        CryptoClass.keysD.getSolution4()+CryptoClass.keysD.getSolution5()+CryptoClass.keysD.getSolution6()+CryptoClass.keysD.getSolution7()+
+                        CryptoClass.keysD.getSolution8()+CryptoClass.keysD.getSolution9()+CryptoClass.keysD.getSolution10();
 
                 boolean isHex = message.toUpperCase().matches("[0-9A-F]+");
                 if(!CryptoClass.keysD.getSolutionCount().equals("64"))
@@ -165,9 +170,7 @@ private int duzina=1;
 
                 }
 
-                CryptoClass.cl.InsertSearchData(Integer.parseInt(CryptoClass.keysD.getKeysCount()), CryptoClass.remove_extra(CryptoClass.keysD.getPrivateKey()),0,
-                        CryptoClass.keysD.getSolution1(),CryptoClass.keysD.getSolution2(),CryptoClass.keysD.getSolution3(),CryptoClass.keysD.getSolution4(),CryptoClass.keysD.getSolution5()
-                        ,CryptoClass.keysD.getSolution6(),CryptoClass.keysD.getSolution7(),CryptoClass.keysD.getSolution8());
+             insert();
 
 
             }
@@ -183,8 +186,8 @@ private int duzina=1;
 
                 AlertDialog alertDialog = new AlertDialog.Builder(getActivity()).create();
                 alertDialog.setTitle("INFO");
-                alertDialog.setMessage("By solving this puzzle you will receive a private key that contains bitcoins. There are 8 riddles, " +
-                        "and each riddle contains a part of the private key. To get the full private key you need to solve them all, and combine them. The sum of all solutions characters has to be 64. " +
+                alertDialog.setMessage("By solving this puzzle you will receive a private key that contains bitcoins. There are 10 riddles, " +
+                        "and each riddle contains a part of the private key. To get the full private key you need to solve them all, and combine them. The combined length of all solutions has to be 64. " +
                         "The solutions are comprised of only hexadecimal numbers (123456789ABCDEF). New hints will be published with newer versions. Good luck!");
                 alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
                         new DialogInterface.OnClickListener() {
@@ -233,6 +236,14 @@ private int duzina=1;
         });
 
         img.startAnimation(fadeOut);
+    }
+
+    private  void insert()
+    {
+        CryptoClass.cl.InsertSearchData(Integer.parseInt(CryptoClass.keysD.getKeysCount()), CryptoClass.remove_extra(CryptoClass.keysD.getPrivateKey()),0,
+                CryptoClass.keysD.getSolution1(),CryptoClass.keysD.getSolution2(),CryptoClass.keysD.getSolution3(),CryptoClass.keysD.getSolution4(),CryptoClass.keysD.getSolution5()
+                ,CryptoClass.keysD.getSolution6(),CryptoClass.keysD.getSolution7(),CryptoClass.keysD.getSolution8(),CryptoClass.keysD.getSolution9(),CryptoClass.keysD.getSolution10());
+
     }
 
 

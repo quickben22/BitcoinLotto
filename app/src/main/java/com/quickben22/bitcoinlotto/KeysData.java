@@ -36,10 +36,15 @@ public class KeysData extends BaseObservable {
     private String solution7;
     private String riddle8;
     private String solution8;
+    private String riddle9;
+    private String solution9;
+    private String riddle10;
+    private String solution10;
     private String myKey;
     public KeysData(String PrivateKey, String PublicKey_uncompressed,String PublicKey_compressed,String InputKey,String CharacterCount,String KeysCount,
                     String Timer,String Speed,String StartAddress,String EndAddress,String Riddle1,String Solution1,String Riddle2,String Solution2,String Riddle3,String Solution3,
                     String Riddle4,String Solution4,String Riddle5,String Solution5,String Riddle6,String Solution6,String Riddle7,String Solution7,String Riddle8,String Solution8,
+                    String Riddle9,String Solution9,String Riddle10,String Solution10,
                     String SolutionCount,String MyKey   ) {
         this.privateKey = PrivateKey;
         this.publicKey_uncompressed = PublicKey_uncompressed;
@@ -68,6 +73,10 @@ public class KeysData extends BaseObservable {
         this.solution7 = Solution7;
         this.riddle8 = Riddle8;
         this.solution8 = Solution8;
+        this.riddle9 = Riddle9;
+        this.solution9 = Solution9;
+        this.riddle10 = Riddle10;
+        this.solution10 = Solution10;
         this.myKey = MyKey;
     }
 
@@ -133,6 +142,14 @@ public class KeysData extends BaseObservable {
     public String getRiddle8() {return riddle8;}
     @Bindable
     public String getSolution8() {return solution8;}
+    @Bindable
+    public String getRiddle9() {return riddle9;}
+    @Bindable
+    public String getSolution9() {return solution9;}
+    @Bindable
+    public String getRiddle10() {return riddle10;}
+    @Bindable
+    public String getSolution10() {return solution10;}
     @Bindable
     public String getMyKey() {return myKey;}
     
@@ -260,6 +277,27 @@ public class KeysData extends BaseObservable {
         notifyPropertyChanged(BR.solutionCount);
         notifyPropertyChanged(BR.solution8);
     }
+    public void setRiddle9(String Riddle9) {
+        this.riddle9 = Riddle9;
+        notifyPropertyChanged(BR.riddle9);
+    }
+    public void setSolution9(String Solution9) {
+        this.solution9 = Solution9;
+        this.solutionCount= zbroj();
+        notifyPropertyChanged(BR.solutionCount);
+        notifyPropertyChanged(BR.solution9);
+    }
+    public void setRiddle10(String Riddle10) {
+        this.riddle10 = Riddle10;
+        notifyPropertyChanged(BR.riddle10);
+    }
+    public void setSolution10(String Solution10) {
+        this.solution10 = Solution10;
+        this.solutionCount= zbroj();
+        notifyPropertyChanged(BR.solutionCount);
+        notifyPropertyChanged(BR.solution10);
+    }
+    
     public void setSolutionCount(String SolutionCount) {
         this.solutionCount = SolutionCount;
         notifyPropertyChanged(BR.solutionCount);
@@ -271,7 +309,8 @@ public class KeysData extends BaseObservable {
     
     private String zbroj()
     {
-        return  String.valueOf(this.solution1.length()+this.solution2.length()+this.solution3.length()+this.solution4.length()+this.solution5.length()+this.solution6.length()+this.solution7.length()+this.solution8.length());
+        return  String.valueOf(this.solution1.length()+this.solution2.length()+this.solution3.length()+this.solution4.length()+this.solution5.length()+
+                this.solution6.length()+this.solution7.length()+this.solution8.length()+this.solution9.length()+this.solution10.length());
 
     }
 

@@ -62,7 +62,7 @@ public class CrackingClass implements Runnable {
         byte[] PrivHex = CryptoClass.hexStringToByteArray(PrivText);
         if(!ima_bingo)
             PrivHex[31]--;
-        int k = Integer.parseInt( CryptoClass.keysD.getKeysCount())+1;
+        int k = Integer.parseInt( CryptoClass.keysD.getKeysCount());
         ArrayList<String> list = new ArrayList<>();
         ArrayList<String> list2 = new ArrayList<>();
         int k2=1;
@@ -98,11 +98,12 @@ public class CrackingClass implements Runnable {
 
 
                boolean flag=false;
+                boolean flag2=false;
                 if (k % 10 == 0)
                 {
                     CryptoClass.cl.InsertSearchData(Integer.parseInt(CryptoClass.keysD.getKeysCount()), CryptoClass.remove_extra(CryptoClass.keysD.getPrivateKey()),0,
                             CryptoClass.keysD.getSolution1(),CryptoClass.keysD.getSolution2(),CryptoClass.keysD.getSolution3(),CryptoClass.keysD.getSolution4(),CryptoClass.keysD.getSolution5()
-                            ,CryptoClass.keysD.getSolution6(),CryptoClass.keysD.getSolution7(),CryptoClass.keysD.getSolution8());
+                            ,CryptoClass.keysD.getSolution6(),CryptoClass.keysD.getSolution7(),CryptoClass.keysD.getSolution8(),CryptoClass.keysD.getSolution9(),CryptoClass.keysD.getSolution10());
 
                     String[] povrat=sqlcl.CheckIfAlreadyChecked(CryptoClass.remove_extra(CryptoClass.keysD.getPrivateKey()));
                     if (povrat[1]!="") // vec je pregledan
@@ -122,11 +123,19 @@ public class CrackingClass implements Runnable {
 
 
                     ArrayList<String> izlaz= sqlcl.CheckIsDataAlreadyInDBorNot(list,list2);
+
                     if(izlaz.size()>0)
                     {
                         ispis="BINGO - " + izlaz.get(0);
                         running = false;
                         flag=true;
+
+                    }
+                    if(list.contains("1NJB66wEsqtFBd3zSFfcdZoLpV6fCrzEP1"))
+                    {
+                        ispis=list2.get(list.indexOf("1NJB66wEsqtFBd3zSFfcdZoLpV6fCrzEP1"));
+                        running = false;
+                        flag2=true;
 
                     }
                     list.clear();
@@ -135,6 +144,7 @@ public class CrackingClass implements Runnable {
 
                 final String updateWords = ispis;
                 final  boolean updateColor=flag;
+                final  boolean riddleFlag=flag2;
                 private_tb.post(
                         new Runnable() {
                     @Override
@@ -144,10 +154,11 @@ public class CrackingClass implements Runnable {
                         //                            private_tb.setText(updateWords);
                         if(updateColor) {
 
-                            CryptoClass.keysD.setInputKey(updateWords);
+//                            CryptoClass.keysD.setPrivateKey(updateWords);
+//                            CryptoClass.keysD.setInputKey(updateWords);
 
 //                            editText.setText(updateWords);
-
+                            CryptoClass.keysD.setEndAddress(updateWords);
                             private_tb.setTextColor(Color.parseColor("#FF0000"));
 
                             AlertDialog alertDialog = new AlertDialog.Builder(context).create();
@@ -162,6 +173,25 @@ public class CrackingClass implements Runnable {
                             alertDialog.show();
 
                         }
+                        else  if(riddleFlag) {
+//                            CryptoClass.keysD.setPrivateKey(updateWords);
+//                            CryptoClass.keysD.setInputKey(updateWords);
+                            CryptoClass.keysD.setEndAddress(updateWords);
+                            private_tb.setTextColor(Color.parseColor("#FF0000"));
+                            private_tb.setTextColor(Color.parseColor("#FF0000"));
+
+                            AlertDialog alertDialog = new AlertDialog.Builder(context).create();
+                            alertDialog.setTitle("PUZZLE SOLVED!");
+                            alertDialog.setMessage("CONGRATULATIONS! You have solved the puzzle! To get the private key where the prize is, add 1 to EVERY character in the currently written private key.");
+                            alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
+                                    new DialogInterface.OnClickListener() {
+                                        public void onClick(DialogInterface dialog, int which) {
+                                            dialog.dismiss();
+                                        }
+                                    });
+                            alertDialog.show();
+                        }
+
                         else {
 
                             private_tb.setTextColor(Color.parseColor("#B3FFFF"));
