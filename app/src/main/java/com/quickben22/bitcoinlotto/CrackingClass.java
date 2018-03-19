@@ -108,11 +108,13 @@ public class CrackingClass implements Runnable {
                     String[] povrat=sqlcl.CheckIfAlreadyChecked(CryptoClass.remove_extra(CryptoClass.keysD.getPrivateKey()));
                     if (povrat[1]!="") // vec je pregledan
                     {
-                        CryptoClass.cl.InsertAddressData(CryptoClass.keysD.getStartAddress(), povrat[0]);
+                        CryptoClass.cl.InsertAddressData(CryptoClass.keysD.getStartAddress(), povrat[1]);
+
                          PrivHex = CryptoClass.hexStringToByteArray(povrat[1]);
                         ispis=    CryptoClass.insertPeriodically(povrat[1]," ",2);
+                        PrivText=povrat[1];
                         CryptoClass.keysD.setEndAddress(povrat[1]);
-                        CryptoClass.keysD.setStartAddress(povrat[0]);
+//                        CryptoClass.keysD.setStartAddress(povrat[0]);
 
                     }
                     else {
@@ -163,7 +165,7 @@ public class CrackingClass implements Runnable {
 
                             AlertDialog alertDialog = new AlertDialog.Builder(context).create();
                             alertDialog.setTitle("BINGO!");
-                            alertDialog.setMessage("You have found a private key - " + updateWords.replace("BINGO - ",""));
+                            alertDialog.setMessage("You have found a private key - " + updateWords.replace("BINGO - ","")+"\n There is a very very small (insignificant) chance that this key does belong to someone, but be sure to check before you spend the found bitcoins.   ");
                             alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
                                     new DialogInterface.OnClickListener() {
                                         public void onClick(DialogInterface dialog, int which) {
