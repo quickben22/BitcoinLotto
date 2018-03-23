@@ -17,6 +17,8 @@ import android.widget.EditText;
 import android.content.ClipboardManager;
 import android.widget.TextView;
 import android.content.ClipData;
+
+import com.google.android.gms.analytics.HitBuilders;
 import com.quickben22.bitcoinlotto.CryptoClass;
 import com.quickben22.bitcoinlotto.R;
 import com.quickben22.bitcoinlotto.databinding.FragmentTwoBinding;
@@ -64,6 +66,12 @@ public class TwoFragment extends Fragment{
             @Override
             public void onClick(View v) {
 
+
+                CryptoClass.mTracker.send(new HitBuilders.EventBuilder()
+                        .setCategory("Action")
+                        .setAction("Input private")
+                        .build());
+
 //                TextView private_tb = (TextView)  getView().findViewById(R.id.private_tb);
 //                EditText mEditText = (EditText)  getView().findViewById(R.id.private_tx);
         String message= CryptoClass.GetPrivateKey(CryptoClass.keysD.getInputKey());
@@ -89,6 +97,10 @@ public class TwoFragment extends Fragment{
             @Override
             public void onClick(View v) {
 
+                CryptoClass.mTracker.send(new HitBuilders.EventBuilder()
+                        .setCategory("Action")
+                        .setAction("Random Click")
+                        .build());
 
                 String message=CryptoClass.random();
                 CryptoClass.keysD.setPrivateKey(CryptoClass.insertPeriodically(message," ",2));
@@ -105,7 +117,10 @@ public class TwoFragment extends Fragment{
             @Override
             public void onClick(View v) {
 
-
+                CryptoClass.mTracker.send(new HitBuilders.EventBuilder()
+                        .setCategory("Action")
+                        .setAction("Private to public")
+                        .build());
 
                 String PrivText = CryptoClass.remove_extra(CryptoClass.keysD.getPrivateKey());
 
@@ -137,7 +152,10 @@ public class TwoFragment extends Fragment{
             public void onClick(View v) {
 
 
-
+                CryptoClass.mTracker.send(new HitBuilders.EventBuilder()
+                        .setCategory("Action")
+                        .setAction("Copy public 1")
+                        .build());
 
                 ClipboardManager clipboard = (ClipboardManager)getActivity().getSystemService(Context.CLIPBOARD_SERVICE);
                 ClipData clip = ClipData.newPlainText("Public key compressed",CryptoClass.keysD.getPublicKey_compressed());
@@ -154,6 +172,10 @@ public class TwoFragment extends Fragment{
             @Override
             public void onClick(View v) {
 
+                CryptoClass.mTracker.send(new HitBuilders.EventBuilder()
+                        .setCategory("Action")
+                        .setAction("Copy public 2")
+                        .build());
 
                 ClipboardManager clipboard = (ClipboardManager)getActivity().getSystemService(Context.CLIPBOARD_SERVICE);
                 ClipData clip = ClipData.newPlainText("Public key uncompressed",CryptoClass.keysD.getPublicKey_uncompressed());

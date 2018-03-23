@@ -18,6 +18,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.google.android.gms.analytics.HitBuilders;
+import com.google.android.gms.analytics.Tracker;
 import com.quickben22.bitcoinlotto.CrackingClass;
 import com.quickben22.bitcoinlotto.CryptoClass;
 import com.quickben22.bitcoinlotto.KeysData;
@@ -37,6 +39,7 @@ public class ThreeFragment extends Fragment{
   private  ArrayList<EditText> solutions;
 private int selected=0;
 private int duzina=1;
+
     public ThreeFragment() {
         // Required empty public constructor
     }
@@ -111,6 +114,10 @@ private int duzina=1;
             @Override
             public void onClick(View v) {
 
+                CryptoClass.mTracker.send(new HitBuilders.EventBuilder()
+                        .setCategory("Action")
+                        .setAction("Next button")
+                        .build());
                 riddles.get(selected).setVisibility(View.INVISIBLE);
                 solutions.get(selected).setVisibility(View.INVISIBLE);
                 selected=(selected+1)%duzina;
@@ -124,7 +131,10 @@ private int duzina=1;
         back_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                CryptoClass.mTracker.send(new HitBuilders.EventBuilder()
+                        .setCategory("Action")
+                        .setAction("Back button")
+                        .build());
                 riddles.get(selected).setVisibility(View.INVISIBLE);
                 solutions.get(selected).setVisibility(View.INVISIBLE);
                 selected=(duzina+selected-1)%duzina;
@@ -144,6 +154,12 @@ private int duzina=1;
         inputRiddle_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+
+                CryptoClass.mTracker.send(new HitBuilders.EventBuilder()
+                        .setCategory("Action")
+                        .setAction("Input Riddle")
+                        .build());
 
                 String message=CryptoClass.keysD.getSolution1()+CryptoClass.keysD.getSolution2()+CryptoClass.keysD.getSolution3()+
                         CryptoClass.keysD.getSolution4()+CryptoClass.keysD.getSolution5()+CryptoClass.keysD.getSolution6()+CryptoClass.keysD.getSolution7()+
@@ -184,6 +200,12 @@ private int duzina=1;
             @Override
             public void onClick(View v) {
 
+
+                CryptoClass.mTracker.send(new HitBuilders.EventBuilder()
+                        .setCategory("Action")
+                        .setAction("Riddle info")
+                        .build());
+
                 AlertDialog alertDialog = new AlertDialog.Builder(getActivity()).create();
                 alertDialog.setTitle("INFO");
                 alertDialog.setMessage("By solving this puzzle you will receive a private key that contains bitcoins. There are 10 riddles, " +
@@ -207,6 +229,10 @@ private int duzina=1;
             @Override
             public void onClick(View v) {
 
+                CryptoClass.mTracker.send(new HitBuilders.EventBuilder()
+                        .setCategory("Action")
+                        .setAction("Copy my key")
+                        .build());
 
                 ClipboardManager clipboard = (ClipboardManager)getActivity().getSystemService(Context.CLIPBOARD_SERVICE);
                 ClipData clip = ClipData.newPlainText("Public key mine",CryptoClass.keysD.getMyKey());

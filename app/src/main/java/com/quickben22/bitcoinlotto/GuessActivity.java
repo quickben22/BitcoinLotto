@@ -25,6 +25,8 @@ import android.support.v4.view.ViewPager;
 
 import java.math.RoundingMode;
 
+import com.google.android.gms.analytics.HitBuilders;
+import com.google.android.gms.analytics.Tracker;
 import com.quickben22.bitcoinlotto.databinding.ContentGuessBinding;
 import com.quickben22.bitcoinlotto.fragments.OneFragment;
 import com.quickben22.bitcoinlotto.fragments.TwoFragment;
@@ -37,7 +39,7 @@ import java.util.List;
 import com.google.android.gms.ads.MobileAds;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
-
+//import android.support.multidex.MultiDex;
 import android.os.Handler;
 
 public class GuessActivity extends AppCompatActivity {
@@ -58,6 +60,7 @@ public class GuessActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+//        MultiDex.install(this);
 
         ContentGuessBinding bindings = DataBindingUtil.setContentView(this, R.layout.content_guess);
         CryptoClass.keysD = new KeysData("","","","",
@@ -69,7 +72,7 @@ public class GuessActivity extends AppCompatActivity {
                 "0","18k9UZ2cdqH9GxCtXEm41v121Rpf9aDv24");
         bindings.setKeysD(CryptoClass.keysD);
         // Sample AdMob app ID: ca-app-pub-3940256099942544~3347511713
-        MobileAds.initialize(this, "ca-app-pub-3940256099942544~3347511713");
+        MobileAds.initialize(this, "ca-app-pub-3535032153893847~2319490240");
 //        setContentView(R.layout.activity_guess);
         mAdView = findViewById(R.id.adView);
         AdRequest adRequest = new AdRequest.Builder().build();
@@ -126,6 +129,12 @@ public class GuessActivity extends AppCompatActivity {
             CryptoClass.keysD.setInputKey(message);
             CryptoClass.cl.update(true);
         }
+
+
+            CryptoClass.mTracker=   AnalyticsHelper.getTracker(this);
+
+
+
         runTimer();
 
 //        CryptoClass.cl.InsertSearchData(0,CryptoClass.keysD.getInputKey(),0);
@@ -150,6 +159,28 @@ public class GuessActivity extends AppCompatActivity {
 
         viewPager.setAdapter(adapter);
         viewPager.setOffscreenPageLimit(2);
+
+
+        viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+
+                Log.i("TAG", "Setting screen name: " + position);
+                CryptoClass.mTracker.setScreenName("Image~" + position);
+                CryptoClass.mTracker.send(new HitBuilders.ScreenViewBuilder().build());
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
+
     }
 
     class ViewPagerAdapter extends FragmentPagerAdapter {
@@ -174,6 +205,8 @@ public class GuessActivity extends AppCompatActivity {
             mFragmentList.add(fragment);
             mFragmentTitleList.add(title);
         }
+
+
 
 
         @Override
@@ -315,6 +348,11 @@ return  povrat;
     private  void start_crack()
     {
 
+        CryptoClass.mTracker.send(new HitBuilders.EventBuilder()
+                .setCategory("Action")
+                .setAction("Start Crack")
+                .build());
+
         resetTimer();
 
 startTimer();
@@ -341,6 +379,12 @@ startTimer();
 
     public   void stop_crack()
     {
+
+        CryptoClass.mTracker.send(new HitBuilders.EventBuilder()
+                .setCategory("Action")
+                .setAction("Stop Crack")
+                .build());
+
         stopTimer();
         InfinityLoading infinity = findViewById(R.id.loading);
         infinity.setVisibility(View.GONE);

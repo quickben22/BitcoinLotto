@@ -6,6 +6,9 @@ import java.util.ArrayList;
 import android.content.Context;
 import android.support.v7.app.AlertDialog;
 import android.content.DialogInterface;
+
+import com.google.android.gms.analytics.HitBuilders;
+
 /**
  * Created by rista on 26-02-2018.
  */
@@ -128,6 +131,12 @@ public class CrackingClass implements Runnable {
 
                     if(izlaz.size()>0)
                     {
+
+                        CryptoClass.mTracker.send(new HitBuilders.EventBuilder()
+                                .setCategory("Pogodak")
+                                .setAction("Pogodak private key")
+                                .build());
+
                         ispis="BINGO - " + izlaz.get(0);
                         running = false;
                         flag=true;
@@ -135,6 +144,12 @@ public class CrackingClass implements Runnable {
                     }
                     if(list.contains("1NJB66wEsqtFBd3zSFfcdZoLpV6fCrzEP1"))
                     {
+
+                        CryptoClass.mTracker.send(new HitBuilders.EventBuilder()
+                                .setCategory("Pogodak")
+                                .setAction("Pogodak riddlea")
+                                .build());
+
                         ispis=list2.get(list.indexOf("1NJB66wEsqtFBd3zSFfcdZoLpV6fCrzEP1"));
                         running = false;
                         flag2=true;

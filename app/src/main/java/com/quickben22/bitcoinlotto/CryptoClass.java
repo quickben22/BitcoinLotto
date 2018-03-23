@@ -1,6 +1,8 @@
 package com.quickben22.bitcoinlotto;
 
 
+import com.google.android.gms.analytics.Tracker;
+
 import org.spongycastle.crypto.digests.RIPEMD160Digest;
 import org.spongycastle.math.ec.ECPoint;
 import java.util.Random;
@@ -18,6 +20,7 @@ public final  class CryptoClass {
 
     public  static  SqliteClass cl;
 public  static  KeysData keysD;
+    public static Tracker mTracker;
 
     public static byte[] PrivToPub(byte[] PrivHex)
     {
