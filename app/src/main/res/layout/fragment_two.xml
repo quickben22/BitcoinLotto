@@ -53,6 +53,19 @@
             android:text="Invalid private key format (64hex)!"
             android:textColor="#FF0000" />
 
+        <TextView
+            android:id="@+id/error5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            android:layout_centerHorizontal="true"
+            android:layout_alignTop="@+id/private_tx"
+            android:layout_marginTop="56dp"
+            android:freezesText="true"
+            android:visibility="gone"
+            android:text="Copied to clipboard."
+            android:textColor="#33adff" />
+
         <Button
             android:id="@+id/private_button"
             android:layout_width="256dp"
@@ -74,7 +87,7 @@
             android:layout_width="256dp"
             android:layout_height="40dp"
 
-            android:layout_alignLeft="@+id/private_public_button"
+            android:layout_centerHorizontal="true"
             android:layout_alignTop="@+id/private_button"
             android:layout_below="@+id/private_button"
             android:layout_marginTop="48dp"
@@ -88,19 +101,47 @@
 
         <Button
             android:id="@+id/private_public_button"
-            android:layout_width="256dp"
+            android:layout_width="120dp"
             android:layout_height="40dp"
-
+            android:layout_alignLeft="@+id/random_button"
             android:layout_alignTop="@+id/random_button"
-            android:layout_centerHorizontal="true"
             android:layout_marginTop="48dp"
             android:background="@drawable/buttonshape"
             android:shadowColor="#A8A8A8"
             android:shadowDx="0"
             android:shadowDy="0"
             android:shadowRadius="5"
-            android:text="Convert private to public"
+            android:text="Public Key"
             android:textColor="#FFFFFF" />
+
+        <Button
+            android:id="@+id/private_wif_button"
+            android:layout_width="120dp"
+            android:layout_height="40dp"
+
+            android:layout_alignTop="@+id/random_button"
+            android:layout_alignRight="@+id/random_button"
+            android:layout_marginTop="48dp"
+            android:background="@drawable/buttonshape"
+            android:shadowColor="#A8A8A8"
+            android:shadowDx="0"
+            android:shadowDy="0"
+            android:shadowRadius="5"
+            android:text="Wallet key"
+            android:textColor="#FFFFFF" />
+
+        <Button
+            android:id="@+id/wif_info_button"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_alignBottom="@+id/private_wif_button"
+            android:layout_alignRight="@+id/private_wif_button"
+            android:layout_marginRight="-40dp"
+            android:layout_marginBottom="5dp"
+            android:background="@drawable/buttonshape2"
+            android:foreground="@android:drawable/ic_dialog_info"
+            android:foregroundTint="@android:color/background_light"
+            android:textColor="@android:color/background_light" />
 
         <!--<TextView-->
         <!--android:id="@+id/private_tb"-->

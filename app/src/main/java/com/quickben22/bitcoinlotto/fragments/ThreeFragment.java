@@ -4,6 +4,7 @@ import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.pm.ActivityInfo;
 import android.databinding.DataBindingUtil;
 import android.opengl.Visibility;
 import android.os.Bundle;
@@ -18,6 +19,11 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.MobileAds;
+import com.google.android.gms.ads.reward.RewardItem;
+import com.google.android.gms.ads.reward.RewardedVideoAd;
+import com.google.android.gms.ads.reward.RewardedVideoAdListener;
 import com.google.android.gms.analytics.HitBuilders;
 import com.google.android.gms.analytics.Tracker;
 import com.quickben22.bitcoinlotto.CrackingClass;
@@ -32,13 +38,15 @@ import android.view.animation.AccelerateInterpolator;
 import android.view.animation.Animation.AnimationListener;
 
 
-public class ThreeFragment extends Fragment{
+public class ThreeFragment extends Fragment  {
 
 
   private  ArrayList<TextView> riddles;
   private  ArrayList<EditText> solutions;
 private int selected=0;
 private int duzina=1;
+
+    RewardedVideoAd mRewardedVideoAd;
 
     public ThreeFragment() {
         // Required empty public constructor
@@ -48,7 +56,9 @@ private int duzina=1;
     public void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
+
     }
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -57,160 +67,200 @@ private int duzina=1;
 
 
 
-
         FragmentThreeBinding binding = DataBindingUtil.inflate(
-                inflater, R.layout.fragment_three, container, false);
-        binding.setKeysD(CryptoClass.keysD);
-        View view = binding.getRoot();
+            inflater, R.layout.fragment_three, container, false);
+    binding.setKeysD(CryptoClass.keysD);
+        final View  view = binding.getRoot();
 
-        riddles=new ArrayList<>();
-        solutions=new ArrayList<>();
-
-
-        TextView t1 =  view.findViewById(R.id.Riddle1);
-        TextView t2 =  view.findViewById(R.id.Riddle2);
-        TextView t3 =  view.findViewById(R.id.Riddle3);
-        TextView t4 =  view.findViewById(R.id.Riddle4);
-        TextView t5 =  view.findViewById(R.id.Riddle5);
-        TextView t6 =  view.findViewById(R.id.Riddle6);
-        TextView t7 =  view.findViewById(R.id.Riddle7);
-        TextView t8 =  view.findViewById(R.id.Riddle8);
-        TextView t9 =  view.findViewById(R.id.Riddle9);
-        TextView t10 =  view.findViewById(R.id.Riddle10);
-        riddles.add(t1);
-        riddles.add(t2);
-        riddles.add(t3);
-        riddles.add(t4);
-        riddles.add(t5);
-        riddles.add(t6);
-        riddles.add(t7);
-        riddles.add(t8);
-        riddles.add(t9);
-        riddles.add(t10);
-        EditText e1 =  view.findViewById(R.id.solutionText1);
-        EditText e2 =  view.findViewById(R.id.solutionText2);
-        EditText e3 =  view.findViewById(R.id.solutionText3);
-        EditText e4 =  view.findViewById(R.id.solutionText4);
-        EditText e5 =  view.findViewById(R.id.solutionText5);
-        EditText e6 =  view.findViewById(R.id.solutionText6);
-        EditText e7 =  view.findViewById(R.id.solutionText7);
-        EditText e8 =  view.findViewById(R.id.solutionText8);
-        EditText e9 =  view.findViewById(R.id.solutionText9);
-        EditText e10 =  view.findViewById(R.id.solutionText10);
-        solutions.add(e1);
-        solutions.add(e2);
-        solutions.add(e3);
-        solutions.add(e4);
-        solutions.add(e5);
-        solutions.add(e6);
-        solutions.add(e7);
-        solutions.add(e8);
-        solutions.add(e9);
-        solutions.add(e10);
-        duzina=solutions.size();
-
-        Button next_button = (Button) view.findViewById(R.id.nextButton);
-        next_button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                CryptoClass.mTracker.send(new HitBuilders.EventBuilder()
-                        .setCategory("Action")
-                        .setAction("Next button")
-                        .build());
-                riddles.get(selected).setVisibility(View.INVISIBLE);
-                solutions.get(selected).setVisibility(View.INVISIBLE);
-                selected=(selected+1)%duzina;
-                riddles.get(selected).setVisibility(View.VISIBLE);
-                solutions.get(selected).setVisibility(View.VISIBLE);
-                insert();
-
-            }
-        });
-        Button back_button = (Button) view.findViewById(R.id.backButton);
-        back_button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                CryptoClass.mTracker.send(new HitBuilders.EventBuilder()
-                        .setCategory("Action")
-                        .setAction("Back button")
-                        .build());
-                riddles.get(selected).setVisibility(View.INVISIBLE);
-                solutions.get(selected).setVisibility(View.INVISIBLE);
-                selected=(duzina+selected-1)%duzina;
-                riddles.get(selected).setVisibility(View.VISIBLE);
-                solutions.get(selected).setVisibility(View.VISIBLE);
-                insert();
-            }
-        });
-
-        final TextView mSwitcher = (TextView) view.findViewById(R.id.error1);
-        final TextView mSwitcher2 = (TextView) view.findViewById(R.id.error2);
+    riddles = new ArrayList<>();
+    solutions = new ArrayList<>();
 
 
+    TextView t1 = view.findViewById(R.id.Riddle1);
+    TextView t2 = view.findViewById(R.id.Riddle2);
+    TextView t3 = view.findViewById(R.id.Riddle3);
+    TextView t4 = view.findViewById(R.id.Riddle4);
+    TextView t5 = view.findViewById(R.id.Riddle5);
+    TextView t6 = view.findViewById(R.id.Riddle6);
+    TextView t7 = view.findViewById(R.id.Riddle7);
+    TextView t8 = view.findViewById(R.id.Riddle8);
+    TextView t9 = view.findViewById(R.id.Riddle9);
+    TextView t10 = view.findViewById(R.id.Riddle10);
+    riddles.add(t1);
+    riddles.add(t2);
+    riddles.add(t3);
+    riddles.add(t4);
+    riddles.add(t5);
+    riddles.add(t6);
+    riddles.add(t7);
+    riddles.add(t8);
+    riddles.add(t9);
+    riddles.add(t10);
+    EditText e1 = view.findViewById(R.id.solutionText1);
+    EditText e2 = view.findViewById(R.id.solutionText2);
+    EditText e3 = view.findViewById(R.id.solutionText3);
+    EditText e4 = view.findViewById(R.id.solutionText4);
+    EditText e5 = view.findViewById(R.id.solutionText5);
+    EditText e6 = view.findViewById(R.id.solutionText6);
+    EditText e7 = view.findViewById(R.id.solutionText7);
+    EditText e8 = view.findViewById(R.id.solutionText8);
+    EditText e9 = view.findViewById(R.id.solutionText9);
+    EditText e10 = view.findViewById(R.id.solutionText10);
+    solutions.add(e1);
+    solutions.add(e2);
+    solutions.add(e3);
+    solutions.add(e4);
+    solutions.add(e5);
+    solutions.add(e6);
+    solutions.add(e7);
+    solutions.add(e8);
+    solutions.add(e9);
+    solutions.add(e10);
+    duzina = solutions.size();
+
+    Button next_button = (Button) view.findViewById(R.id.nextButton);
+    next_button.setOnClickListener(new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+
+            CryptoClass.mTracker.send(new HitBuilders.EventBuilder()
+                    .setCategory("Action")
+                    .setAction("Next button")
+                    .build());
+            riddles.get(selected).setVisibility(View.INVISIBLE);
+            solutions.get(selected).setVisibility(View.INVISIBLE);
+            selected = (selected + 1) % duzina;
+            riddles.get(selected).setVisibility(View.VISIBLE);
+            solutions.get(selected).setVisibility(View.VISIBLE);
+            insert();
+
+        }
+    });
+    Button back_button = (Button) view.findViewById(R.id.backButton);
+    back_button.setOnClickListener(new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            CryptoClass.mTracker.send(new HitBuilders.EventBuilder()
+                    .setCategory("Action")
+                    .setAction("Back button")
+                    .build());
+            riddles.get(selected).setVisibility(View.INVISIBLE);
+            solutions.get(selected).setVisibility(View.INVISIBLE);
+            selected = (duzina + selected - 1) % duzina;
+            riddles.get(selected).setVisibility(View.VISIBLE);
+            solutions.get(selected).setVisibility(View.VISIBLE);
+            insert();
+        }
+    });
+
+    final TextView mSwitcher = (TextView) view.findViewById(R.id.error1);
+    final TextView mSwitcher2 = (TextView) view.findViewById(R.id.error2);
 
 
-        Button inputRiddle_button = (Button) view.findViewById(R.id.inputRiddle);
-        inputRiddle_button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+    Button inputRiddle_button = (Button) view.findViewById(R.id.inputRiddle);
+    inputRiddle_button.setOnClickListener(new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
 
 
-                CryptoClass.mTracker.send(new HitBuilders.EventBuilder()
-                        .setCategory("Action")
-                        .setAction("Input Riddle")
-                        .build());
+            CryptoClass.mTracker.send(new HitBuilders.EventBuilder()
+                    .setCategory("Action")
+                    .setAction("Input Riddle")
+                    .build());
 
-                String message=CryptoClass.keysD.getSolution1()+CryptoClass.keysD.getSolution2()+CryptoClass.keysD.getSolution3()+
-                        CryptoClass.keysD.getSolution4()+CryptoClass.keysD.getSolution5()+CryptoClass.keysD.getSolution6()+CryptoClass.keysD.getSolution7()+
-                        CryptoClass.keysD.getSolution8()+CryptoClass.keysD.getSolution9()+CryptoClass.keysD.getSolution10();
+            String message = CryptoClass.keysD.getSolution1() + CryptoClass.keysD.getSolution2() + CryptoClass.keysD.getSolution3() +
+                    CryptoClass.keysD.getSolution4() + CryptoClass.keysD.getSolution5() + CryptoClass.keysD.getSolution6() + CryptoClass.keysD.getSolution7() +
+                    CryptoClass.keysD.getSolution8() + CryptoClass.keysD.getSolution9() + CryptoClass.keysD.getSolution10();
 
-                boolean isHex = message.toUpperCase().matches("[0-9A-F]+");
-                if(!CryptoClass.keysD.getSolutionCount().equals("64"))
-                {
+            boolean isHex = message.toUpperCase().matches("[0-9A-F]+");
+            if (!CryptoClass.keysD.getSolutionCount().equals("64")) {
 
-                    mSwitcher.setVisibility(View.VISIBLE);
-                    fadeOutAndHideImage(mSwitcher);
+                mSwitcher.setVisibility(View.VISIBLE);
+                fadeOutAndHideImage(mSwitcher);
 
-                }
-                else if(!isHex)
-                {
-                    mSwitcher2.setVisibility(View.VISIBLE);
-                    fadeOutAndHideImage(mSwitcher2);
+            } else if (!isHex) {
+                mSwitcher2.setVisibility(View.VISIBLE);
+                fadeOutAndHideImage(mSwitcher2);
 
-                }
-                else
-                {
-                    CryptoClass.keysD.setPrivateKey(CryptoClass.insertPeriodically(message," ",2));
-                    CryptoClass.keysD.setInputKey(message);
-
-                }
-
-             insert();
-
+            } else {
+                CryptoClass.keysD.setPrivateKey(CryptoClass.insertPeriodically(message, " ", 2));
+                CryptoClass.keysD.setInputKey(message);
 
             }
-        });
+
+            insert();
 
 
+        }
+    });
 
 
-        Button question_button = (Button) view.findViewById(R.id.question_button);
-        question_button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+    Button question_button = (Button) view.findViewById(R.id.question_button);
+    question_button.setOnClickListener(new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
 
 
-                CryptoClass.mTracker.send(new HitBuilders.EventBuilder()
-                        .setCategory("Action")
-                        .setAction("Riddle info")
-                        .build());
+            CryptoClass.mTracker.send(new HitBuilders.EventBuilder()
+                    .setCategory("Action")
+                    .setAction("Riddle info")
+                    .build());
 
+            AlertDialog alertDialog = new AlertDialog.Builder(getActivity()).create();
+            alertDialog.setTitle("INFO");
+            alertDialog.setMessage("By solving this puzzle you will receive a private key that contains bitcoins. There are 10 riddles, " +
+                    "and each riddle contains a part of the private key. To get the full private key you need to solve them all, and combine them. The combined length of all solutions has to be 64. " +
+                    "The solutions are comprised of only hexadecimal numbers (123456789ABCDEF). New hints will be published with newer versions. Good luck!");
+            alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
+                    new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.dismiss();
+                        }
+                    });
+            alertDialog.show();
+
+
+        }
+    });
+    final TextView mSwitcher3 = (TextView) view.findViewById(R.id.error4);
+    Button copy_button3 = (Button) view.findViewById(R.id.copy_button3);
+    copy_button3.setOnClickListener(new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+
+            CryptoClass.mTracker.send(new HitBuilders.EventBuilder()
+                    .setCategory("Action")
+                    .setAction("Copy my key")
+                    .build());
+            mSwitcher3.setVisibility(View.VISIBLE);
+            fadeOutAndHideImage(mSwitcher3);
+            ClipboardManager clipboard = (ClipboardManager) getActivity().getSystemService(Context.CLIPBOARD_SERVICE);
+            ClipData clip = ClipData.newPlainText("Public key mine", CryptoClass.keysD.getMyKey());
+            clipboard.setPrimaryClip(clip);
+
+
+        }
+    });
+
+
+    final Button enableRiddle = (Button) view.findViewById(R.id.enableRiddle);
+    enableRiddle.setOnClickListener(new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+
+            mRewardedVideoAd = MobileAds.getRewardedVideoAdInstance(view.getContext());
+
+//                enableRiddle.setEnabled(false);
+            if (mRewardedVideoAd.isLoaded()) {
+
+                AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                builder.setMessage("Do you want to watch a video ad for a riddle reward?").setPositiveButton("Yes", dialogClickListener)
+                        .setNegativeButton("No", dialogClickListener).show();
+
+            } else {
                 AlertDialog alertDialog = new AlertDialog.Builder(getActivity()).create();
-                alertDialog.setTitle("INFO");
-                alertDialog.setMessage("By solving this puzzle you will receive a private key that contains bitcoins. There are 10 riddles, " +
-                        "and each riddle contains a part of the private key. To get the full private key you need to solve them all, and combine them. The combined length of all solutions has to be 64. " +
-                        "The solutions are comprised of only hexadecimal numbers (123456789ABCDEF). New hints will be published with newer versions. Good luck!");
+                alertDialog.setTitle("RESTART");
+                alertDialog.setMessage("Restart the app to get the riddle.");
                 alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
                         new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int which) {
@@ -219,31 +269,48 @@ private int duzina=1;
                         });
                 alertDialog.show();
 
-
-
             }
-        });
-
-        Button copy_button3 = (Button) view.findViewById(R.id.copy_button3);
-        copy_button3.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                CryptoClass.mTracker.send(new HitBuilders.EventBuilder()
-                        .setCategory("Action")
-                        .setAction("Copy my key")
-                        .build());
-
-                ClipboardManager clipboard = (ClipboardManager)getActivity().getSystemService(Context.CLIPBOARD_SERVICE);
-                ClipData clip = ClipData.newPlainText("Public key mine",CryptoClass.keysD.getMyKey());
-                clipboard.setPrimaryClip(clip);
 
 
-            }
-        });
+        }
+    });
+
+
+    if (!CryptoClass.keysD.getSolution11().equals("0")) {
+        next_button.setEnabled(true);
+        back_button.setEnabled(true);
+        inputRiddle_button.setEnabled(true);
+        enableRiddle.setEnabled(false);
+
+    }
 
         return view;
     }
+
+
+
+    DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
+        @Override
+        public void onClick(DialogInterface dialog, int which) {
+            switch (which){
+                case DialogInterface.BUTTON_POSITIVE:
+                    CryptoClass.mTracker.send(new HitBuilders.EventBuilder()
+                            .setCategory("Action")
+                            .setAction("Reklama riddle")
+                            .build());
+
+
+
+
+                    mRewardedVideoAd.show();
+                    break;
+
+                case DialogInterface.BUTTON_NEGATIVE:
+                    //No button clicked
+                    break;
+            }
+        }
+    };
 
     private void fadeOutAndHideImage(final TextView img)
     {
@@ -268,7 +335,8 @@ private int duzina=1;
     {
         CryptoClass.cl.InsertSearchData(Integer.parseInt(CryptoClass.keysD.getKeysCount()), CryptoClass.remove_extra(CryptoClass.keysD.getPrivateKey()),0,
                 CryptoClass.keysD.getSolution1(),CryptoClass.keysD.getSolution2(),CryptoClass.keysD.getSolution3(),CryptoClass.keysD.getSolution4(),CryptoClass.keysD.getSolution5()
-                ,CryptoClass.keysD.getSolution6(),CryptoClass.keysD.getSolution7(),CryptoClass.keysD.getSolution8(),CryptoClass.keysD.getSolution9(),CryptoClass.keysD.getSolution10());
+                ,CryptoClass.keysD.getSolution6(),CryptoClass.keysD.getSolution7(),CryptoClass.keysD.getSolution8(),CryptoClass.keysD.getSolution9(),
+                CryptoClass.keysD.getSolution10(),CryptoClass.keysD.getSolution11());
 
     }
 

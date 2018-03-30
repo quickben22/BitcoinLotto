@@ -49,6 +49,27 @@
             app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
 
+
+        <Button
+            android:id="@+id/enableSearch"
+            android:layout_width="256dp"
+            android:layout_height="40dp"
+            android:enabled="true"
+
+            android:layout_marginBottom="70dp"
+            android:background="@drawable/buttonshape"
+            android:freezesText="true"
+            android:onClick="enable_search"
+            android:shadowColor="#A8A8A8"
+            android:shadowDx="0"
+            android:shadowDy="0"
+            android:shadowRadius="5"
+            android:text="Get more searches"
+            android:textColor="#FFFFFF"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
         <Button
             android:id="@+id/crack_button"
             android:layout_width="256dp"
@@ -68,6 +89,8 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
+
+
 
 
         <TextView

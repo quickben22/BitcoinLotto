@@ -100,11 +100,11 @@ public  static  KeysData keysD;
 
 
 
-    public static   String PubHashToAddress(byte[] hex)
+    public static   String ByteArrayToBase58Check(byte[] hex2)
     {
 
-        byte[] hex2 = new byte[21];
-        System.arraycopy(hex, 0, hex2, 1, 20);
+
+
 
         byte[] ba = new byte[hex2.length + 4];
         System.arraycopy(hex2,0, ba,0, hex2.length);
@@ -114,7 +114,7 @@ public  static  KeysData keysD;
         for (int i = 0; i < 4; i++) ba[hex2.length + i] = thehash[i];
 
 
-        BigInteger addrremain = new BigInteger( ba);
+        BigInteger addrremain = new BigInteger(1, ba);
 
         BigInteger big0 = new BigInteger("0");
         BigInteger big58 =new BigInteger("58");
@@ -143,17 +143,7 @@ public  static  KeysData keysD;
     }
 
 
-    public static  byte[] ValidateAndGetHexPrivateKey(byte leadingbyte, byte[] PrivHex)
-    {
-        byte[] hex = PrivHex;
-        byte[] hex2 = new byte[33];
-        System.arraycopy(hex, 0, hex2, 1, 32);
-        hex2[0] = (byte) 0x80;
-        hex = hex2;
-        hex[0] = leadingbyte;
-        return hex;
 
-    }
 
     public  static String GetPrivateKey(String key)
     {
@@ -269,14 +259,63 @@ public  static  KeysData keysD;
     {
         byte[] pubHex=CryptoClass.PrivToPub(hex);
         byte[] pubHash=CryptoClass.PubHexToHash(pubHex);
-        String address=CryptoClass.PubHashToAddress(pubHash);
+
+            byte[] hex2 = new byte[21];
+            System.arraycopy(pubHash, 0, hex2, 1, 20);
+        String address=CryptoClass.ByteArrayToBase58Check(hex2);
         pubHex=CryptoClass.PrivToPub_compressed(hex);
         pubHash=CryptoClass.PubHexToHash(pubHex);
-       String address2=CryptoClass.PubHashToAddress(pubHash);
+         hex2 = new byte[21];
+        System.arraycopy(pubHash, 0, hex2, 1, 20);
+       String address2=CryptoClass.ByteArrayToBase58Check(hex2);
         String[] povrat={address,address2};
        return  povrat;
 
     }
+
+
+    public static String[] GeneratePrivHexToWIF(byte[] PrivHex)
+    {
+        byte[] hex = ValidateAndGetHexPrivateKey_compressed((byte)0x80, PrivHex); // ili ne kompresed
+        String wif1= ByteArrayToBase58Check(hex);
+        byte[] hex2 = ValidateAndGetHexPrivateKey((byte)0x80, PrivHex); // ili ne kompresed
+        String wif2= ByteArrayToBase58Check(hex2);
+
+        String[] povrat={wif1,wif2};
+        return  povrat;
+    }
+
+    private static byte[] ValidateAndGetHexPrivateKey_compressed(byte leadingbyte, byte[] PrivHex)
+    {
+        byte[] hex = PrivHex;
+
+
+
+        byte[] hex2 = new byte[34];
+        System.arraycopy(hex, 0, hex2, 1, 32);
+        hex2[0] = (byte)0x80;
+        hex = hex2;
+        hex2[33] = (byte)0x01;
+
+        hex[0] = leadingbyte;
+        return hex;
+
+    }
+
+    private static byte[] ValidateAndGetHexPrivateKey(byte leadingbyte, byte[] PrivHex)
+    {
+        byte[] hex = PrivHex;
+        byte[] hex2 = new byte[33];
+        System.arraycopy(hex, 0, hex2, 1, 32);
+        hex2[0] = (byte)0x80;
+        hex = hex2;
+        hex[0] = leadingbyte;
+        return hex;
+
+    }
+
+
+
 
     public static String byteToHex(byte b) {
         char[] hexChars = new char[2];
@@ -334,6 +373,9 @@ public  static  KeysData keysD;
 
         return  s.replace("BINGO -","").replace(" ","").replace("\n","");
     }
+
+
+
 
 
 }

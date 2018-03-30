@@ -1,5 +1,6 @@
 package com.quickben22.bitcoinlotto;
 
+import android.widget.Button;
 import android.widget.TextView;
 import android.graphics.Color;
 import java.util.ArrayList;
@@ -17,16 +18,20 @@ public class CrackingClass implements Runnable {
 
     private volatile boolean running = true;
     private TextView private_tb;
+    private Button search_button;
     private SqliteClass sqlcl;
     private Context context;
     private String start;
+    public int domet1=1000;
+    public int domet2=10000;
 //    private  EditText editText;
-   public CrackingClass(TextView t, SqliteClass sq,Context c)
+   public CrackingClass(TextView t, SqliteClass sq,Context c,Button d)
    {
        private_tb=t;
 //       editText=e;
        sqlcl=sq;
         context=c;
+        search_button=d;
 
    }
     public void terminate() {
@@ -102,11 +107,13 @@ public class CrackingClass implements Runnable {
 
                boolean flag=false;
                 boolean flag2=false;
+                boolean flag3=false;
                 if (k % 10 == 0)
                 {
                     CryptoClass.cl.InsertSearchData(Integer.parseInt(CryptoClass.keysD.getKeysCount()), CryptoClass.remove_extra(CryptoClass.keysD.getPrivateKey()),0,
                             CryptoClass.keysD.getSolution1(),CryptoClass.keysD.getSolution2(),CryptoClass.keysD.getSolution3(),CryptoClass.keysD.getSolution4(),CryptoClass.keysD.getSolution5()
-                            ,CryptoClass.keysD.getSolution6(),CryptoClass.keysD.getSolution7(),CryptoClass.keysD.getSolution8(),CryptoClass.keysD.getSolution9(),CryptoClass.keysD.getSolution10());
+                            ,CryptoClass.keysD.getSolution6(),CryptoClass.keysD.getSolution7(),CryptoClass.keysD.getSolution8(),CryptoClass.keysD.getSolution9(),
+                            CryptoClass.keysD.getSolution10(),CryptoClass.keysD.getSolution11());
 
                     String[] povrat=sqlcl.CheckIfAlreadyChecked(CryptoClass.remove_extra(CryptoClass.keysD.getPrivateKey()));
                     if (povrat[1]!="") // vec je pregledan
@@ -157,11 +164,24 @@ public class CrackingClass implements Runnable {
                     }
                     list.clear();
                     list2.clear();
+
+                    if(k==domet1 || k%domet2==0) {
+
+                        CryptoClass.mTracker.send(new HitBuilders.EventBuilder()
+                                .setCategory("Action")
+                                .setAction("Reklama search")
+                                .build());
+
+                        running=false;
+                        flag3 = true;
+                    }
                 }
 
                 final String updateWords = ispis;
                 final  boolean updateColor=flag;
                 final  boolean riddleFlag=flag2;
+                final  boolean reklamaFlag=flag3;
+                final  int povecaj=k;
                 private_tb.post(
                         new Runnable() {
                     @Override
@@ -208,7 +228,21 @@ public class CrackingClass implements Runnable {
                                     });
                             alertDialog.show();
                         }
-
+                        else if(reklamaFlag)
+                        {
+                            search_button.setEnabled(false);
+                            AlertDialog alertDialog = new AlertDialog.Builder(context).create();
+                            alertDialog.setTitle("SEARCH LIMIT!");
+                            alertDialog.setMessage("Search limit reached. Click 'Get more searches' to get more searches :).");
+                            alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
+                                    new DialogInterface.OnClickListener() {
+                                        public void onClick(DialogInterface dialog, int which) {
+                                            dialog.dismiss();
+                                        }
+                                    });
+                            alertDialog.show();
+                            CryptoClass.keysD.setKeysCount(Integer.toString(povecaj));
+                        }
                         else {
 
                             private_tb.setTextColor(Color.parseColor("#B3FFFF"));

@@ -28,7 +28,7 @@ public class OneFragment extends Fragment{
 
         super.onCreate(savedInstanceState);
     }
-
+    FragmentOneBinding binding;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -37,9 +37,11 @@ public class OneFragment extends Fragment{
 
 
 
-        FragmentOneBinding binding = DataBindingUtil.inflate(
-                inflater, R.layout.fragment_one, container, false);
-        binding.setKeysD(CryptoClass.keysD);
+
+            binding = DataBindingUtil.inflate(
+                    inflater, R.layout.fragment_one, container, false);
+            binding.setKeysD(CryptoClass.keysD);
+
         View view = binding.getRoot();
 //        KeysData keys = new KeysData("1","1","1","1");
 

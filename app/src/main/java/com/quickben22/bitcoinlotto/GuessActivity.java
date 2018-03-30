@@ -1,12 +1,16 @@
 package com.quickben22.bitcoinlotto;
 
 
+import android.content.DialogInterface;
+import android.content.pm.ActivityInfo;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 
 
+import com.adcolony.sdk.AdColony;
 import com.github.ndczz.infinityloading.InfinityLoading;
 
 
@@ -25,6 +29,7 @@ import android.support.v4.view.ViewPager;
 
 import java.math.RoundingMode;
 
+import com.google.android.gms.ads.reward.RewardItem;
 import com.google.android.gms.analytics.HitBuilders;
 import com.google.android.gms.analytics.Tracker;
 import com.quickben22.bitcoinlotto.databinding.ContentGuessBinding;
@@ -39,10 +44,16 @@ import java.util.List;
 import com.google.android.gms.ads.MobileAds;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.reward.RewardedVideoAdListener;
+import com.google.android.gms.ads.reward.RewardedVideoAd;
+import com.applovin.sdk.AppLovinSdk;
 //import android.support.multidex.MultiDex;
 import android.os.Handler;
 
-public class GuessActivity extends AppCompatActivity {
+public class GuessActivity extends AppCompatActivity implements RewardedVideoAdListener {
+
+    private RewardedVideoAd mRewardedVideoAd;
+
 
     private Thread myThread = null;
     private CrackingClass runnable = null;
@@ -52,7 +63,7 @@ public class GuessActivity extends AppCompatActivity {
 
     int seconds;
     boolean running;
-
+    private  Button crack_button;
     private AdView mAdView;
     private TextView mTextView;
 //    private EditText mEditText;
@@ -62,80 +73,115 @@ public class GuessActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 //        MultiDex.install(this);
 
-        ContentGuessBinding bindings = DataBindingUtil.setContentView(this, R.layout.content_guess);
-        CryptoClass.keysD = new KeysData("","","","",
-                "0","0","00:00:00","0","","","1. 849- or sex","",
-                "2. Bones, Vision, Antioxidant, Nerves, Immunity","","3. Monsters don't always stay under the bed.",
-                "","4. Five Black Dragons","","5. Strutt's home number","","6. Bickle's workplace(3)","",
-                "7. Pelham Warner's descendant's tempest","","8. His value is either the highest or the lowest","",
-                "9. Int that overflows: 1906, 6406, 25606, 153094...","","10. Last 2 characters you will have to guess","",
-                "0","18k9UZ2cdqH9GxCtXEm41v121Rpf9aDv24");
-        bindings.setKeysD(CryptoClass.keysD);
-        // Sample AdMob app ID: ca-app-pub-3940256099942544~3347511713
-        MobileAds.initialize(this, "ca-app-pub-3535032153893847~2319490240");
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+
+    ContentGuessBinding bindings = DataBindingUtil.setContentView(this, R.layout.content_guess);
+boolean prviput=true;
+if(CryptoClass.keysD!=null) {
+    prviput = false;
+}
+if(prviput)
+{
+    CryptoClass.keysD = new KeysData("", "", "", "",
+            "0", "0", "00:00:00", "0", "", "", "1. 849- or sex", "",
+            "2. Bones, Vision, Antioxidant, Nerves, Immunity", "", "3. Monsters don't always stay under the bed.",
+            "", "4. Five Black Dragons", "", "5. Strutt's home number", "", "6. Bickle's workplace(3)", "",
+            "7. Pelham Warner's descendant's tempest", "", "8. His value is either the highest or the lowest", "",
+            "9. Int that overflows: 1906, 6406, 25606, 153094...", "", "10. Last 2 characters you will have to guess", "",
+            "0", "0", "18k9UZ2cdqH9GxCtXEm41v121Rpf9aDv24");
+}
+    bindings.setKeysD(CryptoClass.keysD);
+    // Sample AdMob app ID: ca-app-pub-3940256099942544~3347511713
+    MobileAds.initialize(this, "ca-app-pub-3535032153893847~2319490240");
+
+    // Use an activity context to get the rewarded video instance.
+    mRewardedVideoAd = MobileAds.getRewardedVideoAdInstance(this);
+    mRewardedVideoAd.setRewardedVideoAdListener(this);
+
+    AdColony.configure(this,           // activity context
+            "app178a944cc6314107b0",
+            "vzfdbc9070c0e24a6482", "vz26bb4ad1b278412c95"); // list of all your zones set up on the AdColony Dashboard
+        if(prviput)
+    AppLovinSdk.initializeSdk(this);
+
 //        setContentView(R.layout.activity_guess);
-        mAdView = findViewById(R.id.adView);
-        AdRequest adRequest = new AdRequest.Builder().build();
-        mAdView.loadAd(adRequest);
+    mAdView = findViewById(R.id.adView);
+    AdRequest adRequest = new AdRequest.Builder().build();
+    mAdView.loadAd(adRequest);
 
 
-
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-       setSupportActionBar(toolbar);
+    Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+    setSupportActionBar(toolbar);
 
 //         shapeLoadingDialog = new ShapeLoadingDialog(this);
 
 
-
 //        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        viewPager = (ViewPager) findViewById(R.id.viewpager);
-        setupViewPager(viewPager);
+    viewPager = (ViewPager) findViewById(R.id.viewpager);
+    setupViewPager(viewPager);
 
-        tabLayout = (TabLayout) findViewById(R.id.tabs);
-        tabLayout.setupWithViewPager(viewPager);
-
-
-        mTextView=findViewById(R.id.LetterCounter);
+    tabLayout = (TabLayout) findViewById(R.id.tabs);
+    tabLayout.setupWithViewPager(viewPager);
 
 
-       CryptoClass.cl=new SqliteClass(this);
+    mTextView = findViewById(R.id.LetterCounter);
+        crack_button = findViewById(R.id.crack_button);
+if(prviput)
+    CryptoClass.cl = new SqliteClass(this);
 
-        TextView private_tb = findViewById(R.id.private_tb);
-        runnable = new CrackingClass(private_tb, CryptoClass.cl,this);
+    TextView private_tb = findViewById(R.id.private_tb);
 
-        ArrayList<String> lista= CryptoClass.cl.GetSearchData();
 
-        if(lista.size()>0)
-        {
-            CryptoClass.keysD.setPrivateKey(CryptoClass.insertPeriodically(lista.get(1), " ", 2));
-            CryptoClass.keysD.setInputKey(lista.get(1));
-            CryptoClass.keysD.setKeysCount(lista.get(0));
-            CryptoClass.keysD.setSolution1(lista.get(3));
-            CryptoClass.keysD.setSolution2(lista.get(4));
-            CryptoClass.keysD.setSolution3(lista.get(5));
-            CryptoClass.keysD.setSolution4(lista.get(6));
-            CryptoClass.keysD.setSolution5(lista.get(7));
-            CryptoClass.keysD.setSolution6(lista.get(8));
-            CryptoClass.keysD.setSolution7(lista.get(9));
-            CryptoClass.keysD.setSolution8(lista.get(10));
-            CryptoClass.keysD.setSolution9(lista.get(11));
-            CryptoClass.keysD.setSolution10(lista.get(12));
+            runnable = new CrackingClass(private_tb, CryptoClass.cl, this, crack_button);
+        if(prviput) {
+            ArrayList<String> lista = CryptoClass.cl.GetSearchData();
+
+            if (lista.size() > 0 && lista.get(13) != null) {
+                CryptoClass.keysD.setPrivateKey(CryptoClass.insertPeriodically(lista.get(1), " ", 2));
+                CryptoClass.keysD.setInputKey(lista.get(1));
+                CryptoClass.keysD.setKeysCount(lista.get(0));
+                CryptoClass.keysD.setSolution1(lista.get(3));
+                CryptoClass.keysD.setSolution2(lista.get(4));
+                CryptoClass.keysD.setSolution3(lista.get(5));
+                CryptoClass.keysD.setSolution4(lista.get(6));
+                CryptoClass.keysD.setSolution5(lista.get(7));
+                CryptoClass.keysD.setSolution6(lista.get(8));
+                CryptoClass.keysD.setSolution7(lista.get(9));
+                CryptoClass.keysD.setSolution8(lista.get(10));
+                CryptoClass.keysD.setSolution9(lista.get(11));
+                CryptoClass.keysD.setSolution10(lista.get(12));
+
+                CryptoClass.keysD.setSolution11(lista.get(13));
+            } else {
+                String message = CryptoClass.random();
+                CryptoClass.keysD.setPrivateKey(CryptoClass.insertPeriodically(message, " ", 2));
+                CryptoClass.keysD.setInputKey(message);
+                CryptoClass.cl.update(true);
+            }
+
+
+            CryptoClass.mTracker = AnalyticsHelper.getTracker(this);
+
+
+            loadRewardedVideoAd();
+
         }
-        else
-        {
-            String message = CryptoClass.random();
-            CryptoClass.keysD.setPrivateKey(CryptoClass.insertPeriodically(message, " ", 2));
-            CryptoClass.keysD.setInputKey(message);
-            CryptoClass.cl.update(true);
+
+
+        if(prviput) {
+            int k = Integer.valueOf(CryptoClass.keysD.getKeysCount());
+            if ((k == runnable.domet1 || k % runnable.domet2 == 0) && k != 0)
+                crack_button.setEnabled(false);
         }
 
 
-            CryptoClass.mTracker=   AnalyticsHelper.getTracker(this);
+    runTimer();
 
 
 
-        runTimer();
+
+
 
 //        CryptoClass.cl.InsertSearchData(0,CryptoClass.keysD.getInputKey(),0);
 
@@ -144,12 +190,23 @@ public class GuessActivity extends AppCompatActivity {
     }
 
 
-    private  void neznam()
-    {
+    private void loadRewardedVideoAd() {
 
 
+        if( CryptoClass.keysD.getSolution11().equals("0")) { //riddle
+            mRewardedVideoAd.loadAd("ca-app-pub-3535032153893847/8803492174",
+                    new AdRequest.Builder().build());
+        }
+        else // search
+        {
+            mRewardedVideoAd.loadAd("ca-app-pub-3535032153893847/7859744469",
+                    new AdRequest.Builder().build());
+
+        }
 
     }
+
+
 
     private void setupViewPager(ViewPager viewPager) {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
@@ -183,6 +240,92 @@ public class GuessActivity extends AppCompatActivity {
 
     }
 
+    @Override
+    public void onRewardedVideoAdLoaded() {
+
+        Button enableRiddle=  findViewById(R.id.enableRiddle);
+        if(enableRiddle!=null)
+            enableRiddle.setEnabled(true);
+//        Button enableSearch=  findViewById(R.id.enableSearch);
+//        enableSearch.setEnabled(true);
+    }
+
+    @Override
+    public void onRewardedVideoAdOpened() {
+
+    }
+
+    @Override
+    public void onRewardedVideoStarted() {
+
+    }
+
+    @Override
+    public void onRewardedVideoAdClosed() {
+        loadRewardedVideoAd();
+    }
+
+    @Override
+    public void onRewarded(RewardItem rewardItem) {
+
+        if(rewardItem.getAmount()==1000) // enable search
+        {
+
+
+            AlertDialog alertDialog = new AlertDialog.Builder(this).create();
+            alertDialog.setTitle("REWARD");
+            alertDialog.setMessage("You got "+runnable.domet2+" searches! Good luck searching!");
+            alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, "OK",
+                    new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.dismiss();
+                        }
+                    });
+            alertDialog.show();
+            crack_button.setEnabled(true);
+
+        }
+            else if(rewardItem.getAmount()==10)  // enable riddle
+        {
+//            Button enableRiddle=  findViewById(R.id.enableRiddle);
+//            enableRiddle.setEnabled(true);
+
+            CryptoClass.keysD.setSolution11("1");
+
+            AlertDialog alertDialog = new AlertDialog.Builder(this).create();
+            alertDialog.setTitle("REWARD");
+            alertDialog.setMessage("You have successfully enabled this riddle! Good luck!");
+            alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, "OK",
+                    new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.dismiss();
+                        }
+                    });
+            alertDialog.show();
+            reward_riddle();
+
+
+        }
+
+    }
+
+
+
+    @Override
+    public void onRewardedVideoAdLeftApplication() {
+
+    }
+
+    @Override
+    public void onRewardedVideoAdFailedToLoad(int i) {
+
+    }
+
+//    @Override
+//    public void onRewardedVideoCompleted() {
+//
+//    }
+
     class ViewPagerAdapter extends FragmentPagerAdapter {
         private final List<Fragment> mFragmentList = new ArrayList<>();
         private final List<String> mFragmentTitleList = new ArrayList<>();
@@ -215,16 +358,7 @@ public class GuessActivity extends AppCompatActivity {
         }
     }
 
-//        public void private_button_click(View view) {
-//
-//
-//        TextView private_tb = findViewById(R.id.private_tb);
-//        private_tb.setText("kifla");
-////        EditText mEditText = imageView.findViewById(R.id.private_tx);
-////        String message= CryptoClass.GetPrivateKey(mEditText.getText().toString());
-////        if(message.length()==64)
-////            private_tb.setText(CryptoClass.insertPeriodically(message," ",2));
-//    }
+
 
 
     @Override
@@ -254,32 +388,7 @@ public class GuessActivity extends AppCompatActivity {
 
 
 
-//    String updateWords;
-    public void random_button_click(View view) {
 
-
-        TextView private_tb = findViewById(R.id.private_tb);
-
-        String message=CryptoClass.random();
-        private_tb.setText(CryptoClass.insertPeriodically(message," ",2));
-//        EditText editText = findViewById(R.id.private_tx);
-//        mEditText.setText(message);
-
-
-//        RotateLoading l = (RotateLoading)findViewById(R.id.rotateloading);
-//        l.start();
-//        shapeLoadingDialog.setLoadingText("test");
-//        shapeLoadingDialog.show();
-
-
-//        DilatingDotsProgressBar mDilatingDotsProgressBar = (DilatingDotsProgressBar) findViewById(R.id.progress);
-
-// show progress bar and start animating
-//        mDilatingDotsProgressBar.showNow();
-
-// stop animation and hide
-//        mDilatingDotsProgressBar.hideNow();
-    }
 
 
 
@@ -310,6 +419,20 @@ return  povrat;
     }
 
 
+    private  void reward_riddle()
+    {
+        Button nextButton=  findViewById(R.id.nextButton);
+        Button backButton= findViewById(R.id.backButton);
+        Button inputButton=  findViewById(R.id.inputRiddle);
+        Button enableRiddle=  findViewById(R.id.enableRiddle);
+        nextButton.setEnabled(true);
+        backButton.setEnabled(true);
+        inputButton.setEnabled(true);
+        enableRiddle.setEnabled(false);
+
+
+
+    }
 
     public void crack_many(View view) {
         // Do something in response to button
@@ -345,6 +468,55 @@ return  povrat;
 
 
 
+    DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
+        @Override
+        public void onClick(DialogInterface dialog, int which) {
+            switch (which){
+                case DialogInterface.BUTTON_POSITIVE:
+
+                    CryptoClass.mTracker.send(new HitBuilders.EventBuilder()
+                            .setCategory("Action")
+                            .setAction("Reklama search")
+                            .build());
+
+                    mRewardedVideoAd.show();
+                    break;
+
+                case DialogInterface.BUTTON_NEGATIVE:
+                    //No button clicked
+                    break;
+            }
+        }
+    };
+
+    public void enable_search(View view) {
+
+stop_crack();
+        if (mRewardedVideoAd.isLoaded()) {
+
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setMessage("Do you want to watch a video ad for 10000 more searches?").setPositiveButton("Yes", dialogClickListener)
+                    .setNegativeButton("No", dialogClickListener).show();
+
+
+        }
+        else
+        {
+            AlertDialog alertDialog = new AlertDialog.Builder(this).create();
+            alertDialog.setTitle("RESTART");
+            alertDialog.setMessage("Restart the app to get more searches.");
+            alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
+                    new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.dismiss();
+                        }
+                    });
+            alertDialog.show();
+
+        }
+    }
+
+
     private  void start_crack()
     {
 
@@ -367,14 +539,18 @@ startTimer();
         Button nextButton=findViewById(R.id.nextButton);
         Button backButton=findViewById(R.id.backButton);
         Button inputRiddle=findViewById(R.id.inputRiddle);
+        Button enableRiddle=findViewById(R.id.enableRiddle);
+        Button wifbutton=findViewById(R.id.private_wif_button);
+        wifbutton.setEnabled(false);
         private_button.setEnabled(false);
         random_button.setEnabled(false);
         crackbutton.setEnabled(false);
         nextButton.setEnabled(false);
         backButton.setEnabled(false);
         inputRiddle.setEnabled(false);
-        Button stopbutton=findViewById(R.id.crack_button);
-        stopbutton.setText("Stop searching!");
+        enableRiddle.setEnabled(false);
+
+        crack_button.setText("Stop searching!");
     }
 
     public   void stop_crack()
@@ -394,14 +570,22 @@ startTimer();
         Button nextButton=findViewById(R.id.nextButton);
         Button backButton=findViewById(R.id.backButton);
         Button inputRiddle=findViewById(R.id.inputRiddle);
+        Button enableRiddle=findViewById(R.id.enableRiddle);
+        Button wifbutton=findViewById(R.id.private_wif_button);
+        wifbutton.setEnabled(true);
         private_button.setEnabled(true);
         random_button.setEnabled(true);
         crackbutton.setEnabled(true);
-        nextButton.setEnabled(true);
-        backButton.setEnabled(true);
-        inputRiddle.setEnabled(true);
-        Button stopbutton=findViewById(R.id.crack_button);
-        stopbutton.setText("Start searching!");
+
+        if( !CryptoClass.keysD.getSolution11().equals("0")) {
+            nextButton.setEnabled(true);
+            backButton.setEnabled(true);
+            inputRiddle.setEnabled(true);
+
+        }
+        else
+            enableRiddle.setEnabled(true);
+        crack_button.setText("Start searching!");
         CryptoClass.keysD.setInputKey(CryptoClass.remove_extra(CryptoClass.keysD.getEndAddress()));
         String s1=CryptoClass.remove_extra(CryptoClass.keysD.getPrivateKey()).substring(62,64);
         String s2=CryptoClass.keysD.getEndAddress().substring(62,64);
