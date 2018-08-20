@@ -8,8 +8,8 @@ android {
         applicationId "com.quickben22.bitcoinlotto"
         minSdkVersion 15
         targetSdkVersion 26
-        versionCode 10
-        versionName "version 0.9"
+        versionCode 12
+        versionName "version 0.92"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {

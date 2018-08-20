@@ -268,7 +268,7 @@ if(prviput)
     @Override
     public void onRewarded(RewardItem rewardItem) {
 
-        if(rewardItem.getAmount()==1000) // enable search
+        if(rewardItem.getAmount()==1000 || (rewardItem.getAmount()==10 && !CryptoClass.riddle)) // enable search
         {
 
 
@@ -285,7 +285,7 @@ if(prviput)
             crack_button.setEnabled(true);
 
         }
-            else if(rewardItem.getAmount()==10)  // enable riddle
+            else if(rewardItem.getAmount()==10 && CryptoClass.riddle)  // enable riddle
         {
 //            Button enableRiddle=  findViewById(R.id.enableRiddle);
 //            enableRiddle.setEnabled(true);
@@ -495,7 +495,7 @@ stop_crack();
         if (mRewardedVideoAd.isLoaded()) {
 
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
-            builder.setMessage("Do you want to watch a video ad for 10000 more searches?").setPositiveButton("Yes", dialogClickListener)
+            builder.setMessage("Do you want to watch a video ad for 100,000 more searches?").setPositiveButton("Yes", dialogClickListener)
                     .setNegativeButton("No", dialogClickListener).show();
 
 

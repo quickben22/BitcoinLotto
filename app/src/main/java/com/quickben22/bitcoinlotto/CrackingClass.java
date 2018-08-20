@@ -1,5 +1,6 @@
 package com.quickben22.bitcoinlotto;
 
+import android.net.NetworkInfo;
 import android.widget.Button;
 import android.widget.TextView;
 import android.graphics.Color;
@@ -7,6 +8,7 @@ import java.util.ArrayList;
 import android.content.Context;
 import android.support.v7.app.AlertDialog;
 import android.content.DialogInterface;
+import 	android.net.ConnectivityManager;
 
 import com.google.android.gms.analytics.HitBuilders;
 
@@ -22,8 +24,8 @@ public class CrackingClass implements Runnable {
     private SqliteClass sqlcl;
     private Context context;
     private String start;
-    public int domet1=1000;
-    public int domet2=10000;
+    public int domet1=5000;
+    public int domet2=100000;
 //    private  EditText editText;
    public CrackingClass(TextView t, SqliteClass sq,Context c,Button d)
    {
@@ -60,10 +62,28 @@ public class CrackingClass implements Runnable {
         running=true;
     }
 
+
+    public  boolean spojen()
+    {
+        boolean connected = false;
+
+        ConnectivityManager connectivityManager = (ConnectivityManager)context.getSystemService(Context.CONNECTIVITY_SERVICE);
+        if(connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_MOBILE).getState() == NetworkInfo.State.CONNECTED ||
+                connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI).getState() == NetworkInfo.State.CONNECTED) {
+            //we are connected to a network
+            connected = true;
+        }
+        else
+            connected = false;
+
+        return  connected;
+    }
+
     @Override
     public void run() {
 
         boolean ima_bingo=false;
+        boolean internet=spojen();
         if(CryptoClass.keysD.getPrivateKey().contains("BINGO") || CryptoClass.keysD.getPrivateKey().contains("CHECKED"))
             ima_bingo=true;
         String PrivText = CryptoClass.remove_extra(CryptoClass.keysD.getPrivateKey());
@@ -165,7 +185,7 @@ public class CrackingClass implements Runnable {
                     list.clear();
                     list2.clear();
 
-                    if(k==domet1 || k%domet2==0) {
+                    if(internet&&(k==domet1 || k%domet2==0)) {
 
                         CryptoClass.mTracker.send(new HitBuilders.EventBuilder()
                                 .setCategory("Action")

@@ -294,6 +294,7 @@ private int duzina=1;
         public void onClick(DialogInterface dialog, int which) {
             switch (which){
                 case DialogInterface.BUTTON_POSITIVE:
+                    CryptoClass.riddle=true;
                     CryptoClass.mTracker.send(new HitBuilders.EventBuilder()
                             .setCategory("Action")
                             .setAction("Reklama riddle")

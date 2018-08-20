@@ -21,6 +21,7 @@ public final  class CryptoClass {
     public  static  SqliteClass cl;
 public  static  KeysData keysD;
     public static Tracker mTracker;
+    public  static  boolean riddle=false;
 
     public static byte[] PrivToPub(byte[] PrivHex)
     {
